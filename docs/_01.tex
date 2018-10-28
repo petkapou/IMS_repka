@@ -1,0 +1,110 @@
+\section{1. úkol}
+
+\subsection{Zadání}
+Rozložte na parciální zlomky tuto racionální lomenou funkci:
+
+\begin{displaymath}
+f(x)=\frac{3x^3+x^2-4x+16}{x^5+5x^4+9x^3+13x^2+14x+6}
+\end{displaymath}
+
+\subsection{Rozbor příkladu}
+Máme za úkol najít rozklad na parciální zlomky. Polynom ve \textbf{jmenovateli má vyšší stupeň}, než polynom v~čitateli. Není třeba provádět dělení a můžeme rovnou přistoupit k~rozkladu.
+
+Pro rozklad polynomu ve jmenovateli použijeme Hornerovo schéma a následně si napíšeme rovnici vyjadřující rozklad na jednotlivé parciální zlomky v~obecném tvaru. Dle rovnice si poté sestavíme soustavu rovnic pro výpočet jednotlivých koeficientů. Řešením rovnice budou koeficienty z~množiny $\mathbb{Q}$, čímž získáme rozklad funkce na parciální zlomky.
+
+\subsection{Řešení}
+
+Rozklad čitatele za pomocí Hornerova algoritmu na součin závorek.
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{l||l|l|l|l|l|l|l}
+	 & 1 & 5 & 9 & 13 & 14 & 6 &    \\ \hline\hline
+  -1 & 1 & 4 & 5 & 8  & 6  & 0 & OK \\ \hline
+  -1 & 1 & 3 & 2 & 6  & 0  &   & OK \\ \hline
+  -3 & 1 & 0 & 2 & 0  &    &   & OK \\
+\end{tabular}
+\caption{Rozklad čitatele}
+\end{table}
+
+Rozklad jmenovatele na součin v~oboru reálných čísel je
+
+\begin{displaymath}
+	x^5+5x^4+9x^3+13x^2+14x+6 = (x+1)^2(x+3)(x^2+2)
+\end{displaymath}
+
+Výraz $x^2+2$ nelze dále v~oboru reálných čísel rozložit. Dostáváme funkci:
+
+\begin{displaymath}
+f(x)=\frac{3x^3+x^2-4x+16}{(x+1)^2(x+3)(x^2+2)}
+\end{displaymath}
+
+Funkci můžeme nyní rozložit na parciální zlomky. Rozklad vypadá tedy následovně:
+
+\begin{displaymath}
+f(x)=\frac{3x^3+x^2-4x+16}{(x+1)^2(x+3)(x^2+2)}
+=
+\frac{A}{x+1} +
+\frac{B}{(x+1)^2} +
+\frac{C}{x+3} +
+\frac{Dx+E}{x^2+2}
+\end{displaymath}
+
+Rovnici upravíme:
+\begin{gather*}
+\begin{aligned}
+3x^3+x^2-4x+16 &= 
+ A(x^4+4x^3+5x^2+8x+6) + \\
+& + B(x^3+3x^2+2x+6) + \\
+& + C(x^4+2x^3+3x^2+4x+2) +\\
+& + (Dx+E)\cdot(x^3+5x^2+7x+3)
+\end{aligned}
+\end{gather*}
+
+a po roznásobení dostáváme:
+
+\begin{gather*}
+ \begin{aligned}
+3x^3 + x^2 - 4x + 16 &
+  = A(x^4 + 4x^3+5x^2+8x+6) + \\
+& + B (x^3+3x^2+2x+6) + \\
+& + C (x^4+2x^3+3x^2+4x+2) + \\
+& + D (x^4+5x^3+7x^2+3x) + \\
+& + E (x^3+5x^2+7x+3)
+	\end{aligned}
+\end{gather*}
+
+Vytkneme mocniny:
+
+\begin{gather*}
+\begin{aligned}
+3x^3+x^2-4x+16 &
+ = x^4(A+C+D) + \\
+& \,+ x^3(4A+B+2C+5D+E) + \\
+& \,+ x^2(5A+3B+3C+7D+5E) + \\
+& \,+ x^1(8A+2B+4C+3D+7E) + \\
+& \,+ x^0(6A+6B+2C+3E) 
+\end{aligned}
+\end{gather*}
+
+a dle této rovnice sestavíme soustavu rovnic pro výpočet koeficientů $A, B, C, D$ a $E$:
+
+\begin{gather*}
+\begin{aligned}
+0 &= A~+ C + D\\
+3 &= 4A + B + 2C + 5D + E\\
+1 &= 5A + 3B + 3C + 7D + 5E\\
+-4 &= 8A + 2B + 4C + 3D + 7E\\
+16 &= 6A + 6B + 2C + 3E
+\end{aligned}
+\end{gather*}
+
+Vyřešením soustavy rovnic dostáváme $A=1, B=3, C=-1, D=0, E=-2$. \\Výsledkem rozkladu je:
+
+\begin{displaymath}
+f(x)=
+\frac{1}{x+1} +
+\frac{3}{(x+1)^2} -
+\frac{1}{x+3} -
+\frac{2}{x^2+2}
+\end{displaymath}

@@ -32,5 +32,5 @@ test:
 	chmod +x test.sh
 	./test.sh
 
-dokumentace: doc/dokumentace.tex
-	pdflatex doc/dokumentace.tex
+documentation: docs/documentation.tex
+	cd docs && pdflatex documentation.tex

@@ -1,0 +1,24 @@
+\section{4. úkol}
+
+\subsection{Zadání}
+Načrtněte graf funkce $f$,
+pro kterou platí: $\text{D}_{f} = \mathbb{R} – \{1\}$, pro $x = 1$ má nespojitost 2.druhu a následně platí:
+
+Do obrázku nakreslete i asymptoty a tečny resp. polotečny ke grafu funkce v~bodech $x = 0, x = 1$ a $x = –1$.
+
+\begin{align*}
+f(0) = f(-1) = 0\quad f'(0) = –2 &\qquad \lim_{x\rightarrow 1^{+}} f(x) = 2\qquad\quad\lim_{x\rightarrow –\infty} f(x) = 2\\
+\lim_{x\rightarrow –1^{-}} f'(x) = – \infty&\qquad \lim_{x\rightarrow –1^{+}} f'(x) = \infty\qquad\lim_{x\rightarrow 1^{+}} f'(x) = – 2\\
+f''(x) > 0;&\qquad\forall x \in (0, 1) \cup (1, \infty)\\
+f''(x) < 0;&\qquad\forall x \in (–\infty, –1) \cup (–1,0)\\
+\text{přímka}\ y = 2 - x &\qquad\text{je asymptota pro}\ x\rightarrow \infty
+\end{align*}
+
+\subsection{Řešení}
+Po určení definičního oboru jsme si do grafu zakreslili funkční hodnoty v~přímo zadaných bodech ($0\ \text{a} -1$). Poté jsme dle limit k~$1^+$ a $-\infty$ zakreslili limitní hodnoty pro tyto hodnoty. Dle funkčních hodnot první derivace jsme zakreslili tečny v~daných bodech, dle druhé derivace potom vyznačili v~daných intervalech konvexnost, resp. konkávnost.
+
+\begin{figure}[H]
+	\centering
+	\includesvg[width=\textwidth]{assets/graf}
+	\caption{Nákres funkce $f$}
+\end{figure}

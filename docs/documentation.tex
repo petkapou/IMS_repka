@@ -1,0 +1,74 @@
+% \input utf8-t1
+\documentclass[11pt,a4paper,titlepage]{article}
+
+% ------ PACKAGES ------
+
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[paper=a4paper,top=2cm,left=2cm,right=2cm,bottom=2cm,includefoot]{geometry} % odsazení a velikosti stránek
+%\usepackage{verbatimbox} % box pro tabulky
+\usepackage{graphicx} % inludesvg
+\usepackage{svg} % inludesvg
+%\usepackage{wrapfig} % inludesvg
+%\usepackage{color} % barvy
+%\usepackage{xcolor} % vytváření barev
+%\usepackage{newverbs}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{todonotes} % todo značky
+%\usepackage{float} % podpora pro figure s H pozicí
+%\usepackage[tableposition=above,figurename=Graf]{caption} % vlastní styly pro caption
+\usepackage{titling} % theauthor, thetitle
+\usepackage{fancyhdr} % zápatí, záhlaví
+\usepackage{lastpage} % lastpage label
+%\usepackage{tabularx} % pro responzivni tabulky
+%\usepackage{array} % pro tabulkové zápis
+\usepackage{bookmark} % nenutnost spouštět dvakrát pro korektní reference
+\usepackage{titlesec} % \section na nové stránce
+%\usepackage{multicol}
+\usepackage{pdfpages}
+%\usepackage{enumitem}
+\usepackage{blindtext}
+\usepackage{import}
+%\usepackage{scrextend}
+%\usepackage{todonotes}
+\setcounter{secnumdepth}{0}
+% default width of svg
+\setsvg{width=.5\textwidth}
+\graphicspath{ {assets/} }
+
+% ------ CONFIGURATION ------
+
+\lhead{VUT FIT - IMA}
+\chead{}
+\rhead{Domácí úkol č. 1, varianta 1}
+\lfoot{}
+\cfoot{}
+\rfoot{Strana \thepage \hspace{1pt} z~\pageref*{LastPage}}
+\addtolength{\headheight}{1.2pt}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\title{\textbf{Domácí úkol č. 1, varianta 1}}
+\author{
+	Iva Kavánková \textit{xkavan05},\\
+	Erik Kelemen \textit{xkelem01},\\
+	Martin Kobelka \textit{xkobel02},\\
+	Josef Kolář \textit{xkolar71},\\
+	Matej Kolesár \textit{xkoles07},\\
+	Son Hai Nguyen \textit{xnguye16}
+}
+\date{\today}
+
+\begin{document}
+\input{_titlepage}
+\pagestyle{fancy}
+\input{_01}
+\input{_02}
+\input{_03}
+\input{_04}
+\input{_05}
+
+
+\end{document}

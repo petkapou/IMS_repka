@@ -1,0 +1,48 @@
+\section{5. úkol}
+\subsection{Zadaní}
+ Najděte největší a nejmenší hodnotu funkce $f(x)=\sqrt[3]{(6x^2-x^3)} $ na intervalu $ \langle-2,9\rangle$.
+
+\subsection{Rozbor příkladu}
+Funkce může nabývat svého maxima a minima v~bodech, kdy je derivace rovna nule nebo v~bodech, kde není derivace definována. Vypočítáme proto první derivaci funkce a najdeme tyto body. K~bodům přidáme krajní body zadaného intervalu.
+
+V~těchto bodech zjistíme funkční hodnoty, z~čehož zjistíme v~kterých bodech má funkce maximum a v~kterých bodech má funkce minimum.
+\subsection{Výpočet}
+Určíme definičný obor funkce: $D(f)=R$
+
+Funkci máme zadanou s~odmocninami. Odmocniny si přepíšeme do tvaru mocnin.
+
+\begin{displaymath}
+f(x)=\sqrt[3]{(6x^2-x^3)}=(6x^2-x^3)^\frac{1}{3}
+\end{displaymath}
+
+Najdeme první derivaci funkce a upravíme ji na vhodný tvar tak, abychom snáze našli stacionární body a určili definiční obor $f'(x)$.
+
+\begin{displaymath}
+f'(x)=\left(\frac{1}{3}\cdot\frac{1}{\sqrt[3]{(6x^2-x^3)^2}}\right)\cdot(12x-3x^2)=\frac{3\cdot(4x-x^2)}{3\cdot\sqrt[3]{(6x^2-x^3)^2}}
+\end{displaymath}
+Jmenovatel zlomku nesmí být roven 0. Z~následující rovnice zjistíme body, kde není derivace definována. V~těchto bodech může také funkce nabývat svého maxima nebo minima (limita derivace může být $\pm \infty$.)
+\begin{displaymath}
+6x^2-x^3\neq0
+\end{displaymath}
+\begin{displaymath}
+x^2(6-x)\neq0
+\end{displaymath}
+\begin{displaymath}
+x\neq0 \wedge  x\neq6
+\end{displaymath}
+\begin{displaymath}
+D(f')=R-\{0,6\}
+\end{displaymath}
+Derivaci položíme rovnu 0. To může nastat pouze v~případě, kdy čitatel zlomku je roven 0.
+\begin{displaymath}
+x\cdot(4-x) = 0 \Rightarrow x = 0 \vee x = 4
+\end{displaymath}
+K~stacionárním bodům přidáme ješte hraniční hodnoty. 
+Podezřelé hodnoty tedy jsou body $ \in\{-2,0,4,6,9\} $
+\begin{displaymath}
+f(0) = 0,\quad f(4) \doteq 3.17,\quad f(6) = 0,\quad f(-2) \doteq 3.17,\quad f(9) \doteq 3.12
+\end{displaymath}
+
+Maximum na intevalu $ \langle-2,9\rangle$ je v~bodech $x=4$ a $x=-2$ jeho hodnota je přibližně $3.17$.
+
+Minimum na intevalu $ \langle-2,9\rangle$ je v~bodě $x=0$ a $x=6$ a jeho hodnota je $0$.
