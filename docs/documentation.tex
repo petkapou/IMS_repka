@@ -1,74 +1,62 @@
-% \input utf8-t1
 \documentclass[11pt,a4paper,titlepage]{article}
-
-% ------ PACKAGES ------
-
+\usepackage[left=2cm,text={17cm,24cm},top=3cm]{geometry}
+\usepackage[T1]{fontenc}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[paper=a4paper,top=2cm,left=2cm,right=2cm,bottom=2cm,includefoot]{geometry} % odsazení a velikosti stránek
-%\usepackage{verbatimbox} % box pro tabulky
-\usepackage{graphicx} % inludesvg
-\usepackage{svg} % inludesvg
-%\usepackage{wrapfig} % inludesvg
-%\usepackage{color} % barvy
-%\usepackage{xcolor} % vytváření barev
-%\usepackage{newverbs}
-\usepackage{float}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{todonotes} % todo značky
-%\usepackage{float} % podpora pro figure s H pozicí
-%\usepackage[tableposition=above,figurename=Graf]{caption} % vlastní styly pro caption
-\usepackage{titling} % theauthor, thetitle
-\usepackage{fancyhdr} % zápatí, záhlaví
-\usepackage{lastpage} % lastpage label
-%\usepackage{tabularx} % pro responzivni tabulky
-%\usepackage{array} % pro tabulkové zápis
-\usepackage{bookmark} % nenutnost spouštět dvakrát pro korektní reference
-\usepackage{titlesec} % \section na nové stránce
-%\usepackage{multicol}
-\usepackage{pdfpages}
-%\usepackage{enumitem}
-\usepackage{blindtext}
-\usepackage{import}
-%\usepackage{scrextend}
-%\usepackage{todonotes}
-\setcounter{secnumdepth}{0}
-% default width of svg
-\setsvg{width=.5\textwidth}
-\graphicspath{ {assets/} }
 
-% ------ CONFIGURATION ------
+\bibliographystyle{czplain}
 
-\lhead{VUT FIT - IMA}
-\chead{}
-\rhead{Domácí úkol č. 1, varianta 1}
-\lfoot{}
-\cfoot{}
-\rfoot{Strana \thepage \hspace{1pt} z~\pageref*{LastPage}}
-\addtolength{\headheight}{1.2pt}
-\renewcommand{\headrulewidth}{2pt}
-\renewcommand{\footrulewidth}{0pt}
-
-\title{\textbf{Domácí úkol č. 1, varianta 1}}
-\author{
-	Iva Kavánková \textit{xkavan05},\\
-	Erik Kelemen \textit{xkelem01},\\
-	Martin Kobelka \textit{xkobel02},\\
-	Josef Kolář \textit{xkolar71},\\
-	Matej Kolesár \textit{xkoles07},\\
-	Son Hai Nguyen \textit{xnguye16}
-}
-\date{\today}
-
+%uvozovky
+\newcommand{\ceskeuvozovky}[1]{\quotedblbase#1\textquotedblleft}
 \begin{document}
-\input{_titlepage}
-\pagestyle{fancy}
-\input{_01}
-\input{_02}
-\input{_03}
-\input{_04}
-\input{_05}
 
+\begin{titlepage}
+\begin{center}
+    {\LARGE\textsc{Vysoké učení technické v~Brně}}\\
+    \smallskip
+    {\Large\textsc{Fakulta informačních technologií}}\\
+    \bigskip
+    \vspace{\stretch{0.382}}
+    \LARGE{Modelování a simulace - projekt}\\
+    \smallskip
+    \Huge{Produkce řepky v ČR}\\
+    \vspace{\stretch{0.618}}
+\end{center}
+    {\Large Petr Kapoun - xkapou04 \\ Erik Kelemen - xkelem01 \hfill \today }
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Pojem informace}
+Slovo informace pochází z~latinského in-formatio, což znamená utváření nebo ztvárnění. Je~to~velmi široký, mnohoznačný pojem, který se~užívá v~různých významech. V~nejobecnějším smyslu je~informace chápána jako údaj o~prostředí, jeho stavu a~procesech v~něm probíhajících. Informace snižuje nebo odstraňuje neurčitost systému.\cite{wiki_informace}
+Pokud chceme tvořit texty, je~nutné si~ujasnit, jaké informace a~jak je chceme předávat.
+\subsection{Informace podle Luciana Floridiho}
+Od~roku 1990 Luciano Floridi prosazuje tzv.~„filozofii informace“ jako nezávislou oblast výzkumu. Podle něho význam slova „informace“ závisí na~tom, jakým způsobem je~informace definována. Zahrnuje čtyři vzájemně propojené fenomény tohoto slova:
+\begin{itemize}
+  \item Informace „o~něčem“ (např. jízdní řády).
+  \item Informace „jako~něco“ (např. DNA, otisk prstu).
+  \item Informace „pro~něco“ (např. algoritmus, instrukce).
+  \item Informace „v~něčem“ (např. vzorce). \cite{Havac_informace}
+\end{itemize}
+\subsection{Informace podle Michaela Bucklanda}
+Jeho vnímání informace záleží na~vztazích mezi znalostmi, objekty a~procesy:
+\begin{itemize}
+  \item Informace jako znalost - je~objektem informace jako procesu. Jedná se~o~nehmotnou entitu, nikoliv proces (znalosti, názory, víra).
+  \item Informace jako dokument - hmatatelná entita, dokument. Jde o~informaci v~určité materiální reprezentaci (fixovanou).
+  \item Informace jako proces - někdo někoho informuje, sděluje mu zprávu. Závisí na~kontextu. \cite{online_buckland}
+\end{itemize}
+\section{Hledání informací}
+U~informací, které používáme ve~svých pracích, je~potřeba kontrolovat jejich správnost. V~mnoha případech je~samozřejmě situace méně jasná a~rozdílné názoty ilustrují, že~zde může být konfliktní pohled na~pravdu a~falešnost.\cite{Ar_Information}
+\section{Textové sdílení informací}
+V~moderní kultuře lidé méně mluví a~více píší . Nemám na~mysli rukopis, ale~textování a~psaní na~stroji.
+\cite{Ar_Luv2TxT}
+\textit{„Tištěná média mají dlouhou tradici, odvíjející se od~letáků, jednolistých prohlášení a~rozsáhle šířených krátkých polemik.“}\cite{Douda_informace} I~my dnes potřebujeme předat některé informace formou textu, příkladem může být elektronická pošta. U~některých rozsáhlejších textů, jako jsou manuály, bakalářské a~diplomové práce, je~nutné dodržovat strukturu textu a~další konvence. V~mnoha věcech nám pomůže znalost typografie. K~prezentaci vlastních myšlenek nám~může pomoci například sázecí prostředí. \LaTeX .
+\section{Co~je~\LaTeX?}
+Lze říci, že~prakticky neexistuje osobní počítač, na~němž by~nebyl k~dispozici textový editor nebo některý z~produktů kategorie DTP - Desk Top Publishing (publikování "na~stole"). \cite{RybickaLatex}
+Latex je~generický sázecí systém, který používá tex jako svůj formátovací stroj.\cite{Latex_companion} Jedná se~o~velice elegantní sérii příkazů, které posílají naše myšlenky sázecímu systému, který poté vytvoří dokument pro~naše potěšení.\cite{programujte}
+Díky své flexibilitě, lehkosti použití a~profesionální typografické kvalitě je~momentálně \LaTeX používán skoro ve~všech humanitních oblastech a~ve~vědě.\cite{Latex_companion}
+\newpage
+\bibliography{literatura}
 
 \end{document}

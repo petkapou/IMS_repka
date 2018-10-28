@@ -13,6 +13,9 @@ MODULES=
 
 OBJS = $(addprefix obj/, $(addsuffix .o,$(MODULES)))
 
+DOC_FOLDER = docs
+
+DOC_NAME = documentation
 
 
 all: $(TARGET)
@@ -27,10 +30,25 @@ obj/%.o : src/%.cc src/%.h
 
 clean:
 	rm -f ./obj/*.o $(TARGET)
+	rm -f ./$(DOC_FOLDER)/*.aux
+	rm -f ./$(DOC_FOLDER)/*.dvi
+	rm -f ./$(DOC_FOLDER)/*.ps
+	rm -f ./$(DOC_FOLDER)/*.bbl
+	rm -f ./$(DOC_FOLDER)/*.bbg
+	rm -f ./$(DOC_FOLDER)/*.log
+	rm -f ./$(DOC_FOLDER)/*.toc
+	rm -f ./$(DOC_FOLDER)/*.blg
+	rm -f ./$(DOC_FOLDER)/*.pdf
 
 test:
 	chmod +x test.sh
 	./test.sh
 
-documentation: docs/documentation.tex
-	cd docs && pdflatex documentation.tex
+documentation: $(DOC_FOLDER)/$(DOC_NAME).tex
+	cd $(DOC_FOLDER) && latex $(DOC_NAME).tex
+	cd $(DOC_FOLDER) && bibtex $(DOC_NAME).aux
+	cd $(DOC_FOLDER) && latex $(DOC_NAME).tex
+	cd $(DOC_FOLDER) && latex $(DOC_NAME).tex
+	cd $(DOC_FOLDER) && dvips -t a4 $(DOC_NAME).dvi
+	cd $(DOC_FOLDER) && ps2pdf $(DOC_NAME).ps
+	# cd docs && pdflatex documentation.tex
