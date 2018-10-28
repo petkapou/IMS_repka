@@ -61,3 +61,10 @@ https://www.reflex.cz/clanek/profil/87482/fakta-a-myty-o-repce-co-muze-zastavit-
 http://www.apic-ak.cz/data_ak/17/a/RepkaMytyFakta.pdf
 * Dost o negativech obecně.
 * Hodně informací k řepkovému oleji.
+
+##### Ochrana (Postreky)
+https://www.agro.basf.sk/agroportal/sk/media/migro/info_material/plodinove_karty/2018/BASF_karty_A4_2018_ochrana-repky.pdf
+* Číselné údaje
+
+##### Osivo
+https://www.agro.basf.sk/agroportal/sk/media/migro/product_files/osiva_repky/BASF_SK_-_Fencer_2018.pdf
