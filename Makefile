@@ -1,6 +1,7 @@
 # IMS project 2018 repka olejka
 
 # author: Erik Kelemen
+# author: Petr Kapoun
 
 
 TARGET = IMS
@@ -39,6 +40,7 @@ clean:
 	rm -f ./$(DOC_FOLDER)/*.toc
 	rm -f ./$(DOC_FOLDER)/*.blg
 	rm -f ./$(DOC_FOLDER)/*.pdf
+	rm -f ./$(DOC_FOLDER)/*.out
 
 test:
 	chmod +x test.sh
