@@ -7,7 +7,7 @@ TARGET = IMS
 
 CC=g++
 
-CFLAGS=-O2 -Wall -pedantic
+CFLAGS=-O2 -Wall -pedantic -lsimlib -lm
 
 MODULES=
 
@@ -19,7 +19,7 @@ all: $(TARGET)
 .PHONY: clean, dokumentace
 
 $(TARGET) : $(OBJS) src/main.cc
-	$(CC) $(CFLAGS) $(OBJS) src/main.cc simlib.a -o $@
+	$(CC) $(CFLAGS) $(OBJS) src/main.cc -o $@
 
 obj/%.o : src/%.cc src/%.h
 	mkdir -p obj

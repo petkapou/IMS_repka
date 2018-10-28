@@ -64,7 +64,10 @@ http://www.apic-ak.cz/data_ak/17/a/RepkaMytyFakta.pdf
 
 ##### Ochrana (Postreky)
 https://www.agro.basf.sk/agroportal/sk/media/migro/info_material/plodinove_karty/2018/BASF_karty_A4_2018_ochrana-repky.pdf
+https://www.agro.basf.cz/agroportal/cz/media/migrated/information_material/brochures_crop/2018_1/KARTA_repka_2018.pdf
 * Číselné údaje
 
 ##### Osivo
 https://www.agro.basf.sk/agroportal/sk/media/migro/product_files/osiva_repky/BASF_SK_-_Fencer_2018.pdf
+
+http://obchod.agrokop.cz/chemie-velke-baleni-fav-110xx#/manFilters=149&pageSize=12&orderBy=0
