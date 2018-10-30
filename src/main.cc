@@ -5,87 +5,100 @@
 //
 
 #include "simlib.h"
+#include "season.h"
 
-#define M_HOURS(val) (val*60)
-#define M_DAYS(val) (val*1440)
-#define M_YEARS(val) (val*365*1440)
+#define FERTILE_LAND 50
+#define WORKING_HOURS M_HOURS(8)
+#define TRACTOR_SPEED (Exponential(M_HOURS(1)))
 
 // Global objects
-Queue TillageStart_Q("Tillage Start");
-Queue TillageEnd_Q("Tillage End");
+Queue WorkingHours_Q("Working Time");
+Queue TillageTime_Q("Tillage Time");
+Queue SeedingTime_Q("Seeding Time");
+Queue Wait4Tillage_Q("Tillage Queue");
+Queue Wait4Seeding_Q("Seeding Queue");
 Store Tractors("Tractors", 3);
 
-class FertileLand : public Process{
+class Plant1stStage : public Process {
 public:
   void Behavior() {
-    //TODO
-    if (!TillageStart_Q.Empty())
+    Print(" Plant! \n");
+  }
+};
+
+class TilledLand : public Process {
+public:
+  void Behavior() {
+    while (42)
     {
-      Enter(Tractors, 1);
-      Wait(Exponential(3));
-      Leave(Tractors, 1);
+      if (!SeedingTime_Q.Empty() && !Tractors.Full() && !WorkingHours_Q.Empty())
+      {
+        Enter(Tractors, 1);
+        Wait(TRACTOR_SPEED);
+        Leave(Tractors, 1);
+        if (!SeedingTime_Q.Empty()) //Everything correct
+        {
+          //(new TilledLand)->Activate(); //Go to next stage
+          if (!Wait4Seeding_Q.Empty())
+            Wait4Seeding_Q.GetFirst()->Activate();
+
+          Wait(Exponential(M_DAYS(13)));
+          if (Random() <= 0.01 )
+            (new TilledLand)->Activate();  //Nothing growed from seeds
+          else
+            (new Plant1stStage)->Activate(); //Go to next stage
+        }
+        else    //did not make it in time
+        {
+          (new TilledLand)->Activate();
+        }
+
+        this->Cancel();
+      }
+      else
+      {
+        Wait4Seeding_Q.Insert(this);
+        this->Passivate();
+      }
     }
   }
 };
 
-class TilledLand : public Process{
+class FertileLand : public Process {
 public:
   void Behavior() {
-    //TODO
-  }
-};
-
-class TillageTimeStart : public Process{
-public:
-  void Behavior() {
-    if (TillageEnd_Q.Empty())
+    while (42)
     {
-      TillageStart_Q.Insert(this);
-      Passivate();
-    }
-    else
-    {
-      TillageEnd_Q.GetFirst()->Activate();
-    }
-  }
-};
+      if (!TillageTime_Q.Empty() && !Tractors.Full() && !WorkingHours_Q.Empty())
+      {
+        Enter(Tractors, 1);
+        Wait(TRACTOR_SPEED);
+        Leave(Tractors, 1);
+        if (!TillageTime_Q.Empty()) //Everything correct
+        {
+          (new TilledLand)->Activate(); //Go to next stage
+          if (!Wait4Tillage_Q.Empty())
+            Wait4Tillage_Q.GetFirst()->Activate();
+        }
+        else    //did not make it in time
+        {
+          (new FertileLand)->Activate();
+        }
 
-class TillageTimeEnd : public Process{
-public:
-  void Behavior() {
-    //TODO
-    if (TillageStart_Q.Empty())
-    {
-      TillageEnd_Q.Insert(this);
-      Passivate();
+        this->Cancel();
+      }
+      else
+      {
+        Wait4Tillage_Q.Insert(this);
+        this->Passivate();
+      }
     }
-    else
-    {
-      TillageStart_Q.GetFirst()->Activate();
-    }
-  }
-};
-
-class SeasonManager : public Event{
-public:
-  void Behavior() {
-    //TODO
-    Activate(Time+M_YEARS(1));  //repeat every year
-    (new TillageTimeStart)->Activate();
-  }
-};
-
-class DayCycleManager : public Event{
-public:
-  void Behavior() {
-    //TODO
-    Activate(Time+M_DAYS(1));
   }
 };
 
 class Generator : public Event {  // Generator of customers
   void Behavior() {               // - Generator behavior description
-    for (int i = 0; i < 2000; ++i)
+    for (int i = 0; i < FERTILE_LAND; ++i)
       (new FertileLand)->Activate();
 
     (new SeasonManager)->Activate();
