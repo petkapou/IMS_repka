@@ -1,44 +1,113 @@
 #include "season.h"
 
 
-void TimeStart::Behavior() {
-  m_Queue.Insert(this);
-  if (!m_Waiting.Empty())
+void SeasonCycle::Behavior() {
+  (new SeedingCycle)->Activate();
+  (new HarvestCycle)->Activate();
+  (new ButisanCompleteCycle)->Activate();
+  (new StratosUltraCycle)->Activate();
+  (new CaryxCycle)->Activate();
+  (new PictorCycle)->Activate();
+  (new EfilorCycle)->Activate();
+}
+
+void WeekCycle::Behavior() {
+
+  workingHours_F.Seize(this, 1);
+  while (42)
   {
-    for (auto it = m_Waiting.begin(); it != m_Waiting.end(); ++it)
+    for (int i = 0; i < config.GetWorkingDaysCount(); ++i)
     {
-      m_Waiting.Get(it)->Activate();
+      Wait(config.GetMorningTime());
+      workingHours_F.Release(this);
+      Wait(config.GetWorkingHoursTime());
+      workingHours_F.Seize(this, 1);
     }
-  }
-
-  Passivate();
-}
-
-
-void TimeEnd::Behavior() {
-  if (!m_Queue.Empty())
-  {
-    for (auto it = m_Queue.begin(); it != m_Queue.end(); ++it)
-    {
-      m_Queue.Get(it)->Activate();
-    }
+    double restDays = WEEK_DAY_COUNT - config.GetWorkingDaysCount();
+    Wait(M_DAYS(restDays));
   }
 }
 
-
-void SeasonManager::Behavior() {
-  //TODO
-  (new TimeStart(TillageTime_Q, Wait4Tillage_Q))->Activate();   //We can till ground 2 days before seeding
-  (new TimeStart(SeedingTime_Q, Wait4Seeding_Q))->Activate(Time + M_DAYS(2));
-  (new TimeEnd(TillageTime_Q))->Activate(Time + M_DAYS(5));     //  Stop seeding and
-  (new TimeEnd(SeedingTime_Q))->Activate(Time + M_DAYS(5));     //  tillage at same time
-  Activate(Time + M_YEARS(1)); //repeat every year
+void SeedingCycle::Behavior() {
+  seedingTime_F.Seize(this);
+  while (42){
+    Wait(config.GetSeedingTimeStart());
+    seedingTime_F.Release(this);
+    Wait(config.GetSeedingDuration());
+    seedingTime_F.Seize(this);
+    double restTime = M_YEARS(1) - config.GetSeedingTimeStart() - config.GetSeedingDuration();
+    Wait(restTime);
+  }
 }
 
-void DayCycleManager::Behavior() {
-  //TODO
-  (new TimeStart(WorkingHours_Q, Wait4Tillage_Q))->Activate();
-  (new TimeStart(WorkingHours_Q, Wait4Seeding_Q))->Activate();
-  (new TimeEnd(WorkingHours_Q))->Activate(Time + M_HOURS(8));
-  Activate(Time + M_DAYS(1));
+void HarvestCycle::Behavior() {
+  harvestTime_F.Seize(this);
+  while (42){
+    Wait(config.GetHarvestTimeStart());
+    harvestTime_F.Release(this);
+    Wait(config.GetHarvestDuration());
+    harvestTime_F.Seize(this);
+    double restTime = M_YEARS(1) - config.GetHarvestTimeStart() - config.GetHarvestDuration();
+    Wait(restTime);
+  }
+}
+
+void ButisanCompleteCycle::Behavior() {
+  butisanCompleteTime_F.Seize(this, 1);
+  while (42){
+    Wait(BUTISAN_COMPLETE_TIME_START);
+    butisanCompleteTime_F.Release(this);
+    Wait(BUTISAN_COMPLETE_DURATION);
+    butisanCompleteTime_F.Seize(this, 1);
+    double restTime = M_YEARS(1) - BUTISAN_COMPLETE_TIME_START - BUTISAN_COMPLETE_DURATION;
+    Wait(restTime);
+  }
+}
+
+void StratosUltraCycle::Behavior() {
+  stratosUltraTime_F.Seize(this, 1);
+  while (42){
+    Wait(STRATOS_ULTRA_TIME_START);
+    stratosUltraTime_F.Release(this);
+    Wait(STRATOS_ULTRA_DURATION);
+    stratosUltraTime_F.Seize(this, 1);
+    double restTime = M_YEARS(1) - STRATOS_ULTRA_TIME_START - STRATOS_ULTRA_DURATION;
+    Wait(restTime);
+  }
+}
+
+void CaryxCycle::Behavior() {
+  caryxTime_F.Seize(this, 1);
+  while (42){
+    Wait(CARYX_TIME_START);
+    caryxTime_F.Release(this);
+    Wait(CARYX_DURATION);
+    caryxTime_F.Seize(this, 1);
+    double restTime = M_YEARS(1) - CARYX_TIME_START - CARYX_DURATION;
+    Wait(restTime);
+  }
+}
+
+void PictorCycle::Behavior() {
+  pictorTime_F.Seize(this, 1);
+  while (42){
+    Wait(PICTOR_TIME_START);
+    pictorTime_F.Release(this);
+    Wait(PICTOR_DURATION);
+    pictorTime_F.Seize(this, 1);
+    double restTime = M_YEARS(1) - PICTOR_TIME_START - PICTOR_DURATION;
+    Wait(restTime);
+  }
+}
+
+void EfilorCycle::Behavior() {
+  efilorTime_F.Seize(this, 1);
+  while (42){
+    Wait(EFILOR_TIME_START);
+    efilorTime_F.Release(this);
+    Wait(EFILOR_DURATION);
+    efilorTime_F.Seize(this, 1);
+    double restTime = M_YEARS(1) - EFILOR_TIME_START - EFILOR_DURATION;
+    Wait(restTime);
+  }
 }

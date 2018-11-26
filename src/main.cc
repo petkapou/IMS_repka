@@ -4,114 +4,69 @@
 // Simple model of TODO
 //
 
+
 #include "simlib.h"
+#include "parser.h"
 #include "season.h"
+#include "land.h"
 
-#define FERTILE_LAND 50
-#define WORKING_HOURS M_HOURS(8)
-#define TRACTOR_SPEED (Exponential(M_HOURS(1)))
+#include <ctime>
 
+ConfData config;
 // Global objects
-Queue WorkingHours_Q("Working Time");
-Queue TillageTime_Q("Tillage Time");
-Queue SeedingTime_Q("Seeding Time");
-Queue Wait4Tillage_Q("Tillage Queue");
-Queue Wait4Seeding_Q("Seeding Queue");
-Store Tractors("Tractors", 3);
+Facility workingHours_F("Working Hours");
+Facility seedingTime_F("Seeding Time");
+Facility harvestTime_F("Harvest Time");
+Facility butisanCompleteTime_F("Time for Butisan Complete");
+Facility stratosUltraTime_F("Time for Stratos Ultra");
+Facility caryxTime_F("Time for Caryx");
+Facility pictorTime_F("Time for Pictor");
+Facility efilorTime_F("Time for Efilor");
 
-class Plant1stStage : public Process {
-public:
+Stat usedLandStat("Used land");
+Stat butisanCompleteStat("Applied spray Butisan Complete");
+Stat stratosUltraStat("Applied spray Stratos Ultra");
+Stat caryxStat("Applied spray Caryx");
+Stat pictorStat("Applied spray Pictor");
+Stat efilorStat("Applied spray Efilor");
+Stat harvestedLandStat("Harvested land");
+Stat profitStat("Profit in liters");
+
+
+
+Store seedingMachines_S("Seeding Mechines", 0);
+Store sprayers_S("Sprayers", 0);
+Store harvestMachines_S("Harvest Machines", 0);
+
+class Generator : public Event {
   void Behavior() {
-    Print(" Plant! \n");
-  }
-};
-
-class TilledLand : public Process {
-public:
-  void Behavior() {
-    while (42)
-    {
-      if (!SeedingTime_Q.Empty() && !Tractors.Full() && !WorkingHours_Q.Empty())
-      {
-        Enter(Tractors, 1);
-        Wait(TRACTOR_SPEED);
-        Leave(Tractors, 1);
-        if (!SeedingTime_Q.Empty()) //Everything correct
-        {
-          //(new TilledLand)->Activate(); //Go to next stage
-          if (!Wait4Seeding_Q.Empty())
-            Wait4Seeding_Q.GetFirst()->Activate();
-
-          Wait(Exponential(M_DAYS(13)));
-          if (Random() <= 0.01 )
-            (new TilledLand)->Activate();  //Nothing growed from seeds
-          else
-            (new Plant1stStage)->Activate(); //Go to next stage
-        }
-        else    //did not make it in time
-        {
-          (new TilledLand)->Activate();
-        }
-
-        this->Cancel();
-      }
-      else
-      {
-        Wait4Seeding_Q.Insert(this);
-        this->Passivate();
-      }
-    }
-  }
-};
-
-class FertileLand : public Process {
-public:
-  void Behavior() {
-    while (42)
-    {
-      if (!TillageTime_Q.Empty() && !Tractors.Full() && !WorkingHours_Q.Empty())
-      {
-        Enter(Tractors, 1);
-        Wait(TRACTOR_SPEED);
-        Leave(Tractors, 1);
-        if (!TillageTime_Q.Empty()) //Everything correct
-        {
-          (new TilledLand)->Activate(); //Go to next stage
-          if (!Wait4Tillage_Q.Empty())
-            Wait4Tillage_Q.GetFirst()->Activate();
-        }
-        else    //did not make it in time
-        {
-          (new FertileLand)->Activate();
-        }
-
-        this->Cancel();
-      }
-      else
-      {
-        Wait4Tillage_Q.Insert(this);
-        this->Passivate();
-      }
-    }
-  }
-};
-
-class Generator : public Event {  // Generator of customers
-  void Behavior() {               // - Generator behavior description
-    for (int i = 0; i < FERTILE_LAND; ++i)
+    for (int i = 0; i < config.GetFertileLandCount(); ++i)
       (new FertileLand)->Activate();
 
-    (new SeasonManager)->Activate();
-    (new DayCycleManager)->Activate();
+    (new WeekCycle)->Activate();
+    (new SeasonCycle)->Activate();
   }
 };
 
-int main() {                    // Experiment description
+int main() {
   //DebugON();
   //SetOutput("model.out");      // Write results to file
-  Print(" REPKA \n");
+  RandomSeed(clock());
+  Parser(CONFIG_FILE, &config);
+  seedingMachines_S.SetCapacity(config.GetSeedingMachineCount());
+  sprayers_S.SetCapacity(config.GetSprayerCount());
+  harvestMachines_S.SetCapacity(config.GetHarvestMachineCount());
+  //Print(" REPKA \n");
   Init(0, M_YEARS(1));                 // Init simulator for time 0..1000
   (new Generator)->Activate();  // Create generator, activate at 0
   Run();                        // - Simulation run
+  usedLandStat.Output();
+  butisanCompleteStat.Output();
+  stratosUltraStat.Output();
+  caryxStat.Output();
+  pictorStat.Output();
+  efilorStat.Output();
+  harvestedLandStat.Output();
+  profitStat.Output();
   SIMLIB_statistics.Output();   // Print simulator internal statistics
 }
