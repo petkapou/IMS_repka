@@ -34,7 +34,7 @@
 
 
 \section{Úvod}
-I like IMS. I want A. I not nice when not A. I kill garant when not A. Give A.
+Našim cílem je simulovat rúst řepky, při kterém se zameříme na co nejefektivnejší využití zemedelských strojú na sázení, postřik, rozmetání hnojiv, sklizeň a přepravu do skladu. Neklademe si však za cíl přesne určit výnos řepky, spíše určit percentuální stráty, v dúsledku infestace škúdci, nebo naopak navýšení úrody v dúsledku poctivého hnojení. Simulace sleduje také použité zdroje jako náklady za pohonné látky, postřik a podobne. Pak už záleží jen na uživateli, či simulované navýšení úrody stojí za náklady spojené s jeho realizací.
 
 
 \include{postriky}
@@ -42,17 +42,35 @@ I like IMS. I want A. I not nice when not A. I kill garant when not A. Give A.
 
 \include{hnojiva}
 
-
-\section{Voda}
-Při simulaci se sleduje statistika použití vody.
-
-
 \include{stroje}
 
-\pagebreak
-\section{Implementácia}
+\section{Sledované statistiky}
+\subsection{Úspešnost prací}
+Nejdúležitejší statistiky jsou práve staatistiky úspešnosti, protože definujú približné procento prací, které se vykonali ze všech naplánovaných. Kolik procent hektarú orné púdy sme stihli vysázet predtím než skončilo sázecí období. Nebo kolik procent hektarú řepky se stihlo postříkat/pohnojit před vypršením období na postřik/hnojení.
+\subsubsection{Úspešnost sázení řepky}
+Tahle statistika závisí primárne od počtu hektarú orné púdy, času na sázení a počtu sázecích strojú. Ak bude z téhle statistiky vzcházet jenom bezproblémovém vysázení všech hektarú, indikuje to uživateli, že by mohl nakoupit víc orné púdy, skrátiť čas na sázení, nebo prodat nejaký sázecí stroj.
+\subsubsection{Úspešnost postřikú}
+Tahle statistika závisí od počtu hektarú řepky a postřikovačú. Tahle statistika se eviduje pro každý postřek jednotlive, i společne pro všechny. Statistiky jsou časove závislé, v dobe kdy bude probíhat více postřikú najednou budou výsledky horší. Postřikovače více vytížené. Další závislotí je, jestli se jedná o postřik selektivní nebo převentivní. Selektivní postřiky nemusí postřikovat celé pole, jenom nakažené časti pole. Ochranné postřiky budou aplikovány na celé pole. Uživatel múže z tehle statistik vyzistit období nejvetšího vytížení postřikovačú. Na tyhle období se podle toho adekvátne pripravit pronajmutím dalších strojú nebo navýšením pracovných hodin.
+\subsubsection{Úspešnost hnojení}
+Tahle statistika závisí od počtu hektarú řepky a rozmetadel minerálních hnojiv. Tahle statistika se eviduje pro každé hnojivo jednotlive, i společne pro všechny. Časová závislost je stejná jako u postřikú. Znovu je statistika určená pro definování nejkritičtejších období, na které by se pak mohl uživatel(vlastník pole) připravit.
+\subsubsection{Úspešnost sklizne}
+Tahle statistika závisí od počtu hektarú řepky a sklízecích strojú. Pro jakéhokoliv zemedelce je určite jakákoliv jiná než stoprocentní sklizeň pole nepřípustná. Pro by si mel díky simulaci včas uvedomit, zda li mu daný počet strojú bude stačit.
+\subsection{Voda}
+Při simulaci se sleduje statistika použití vody. Jde o vodu použitou při postřecích. Její hodnota se nijak nepřevádí na cenové vyhodnocení, i když by sme mohli uvažovat cenu užitkové vody v českých korunách, není bežná praxe, aby si zemedelci vodu kupovali.
 
-\subsection{Petriho siete}
+\subsection{Pohonné látky}
+Při simulaci se sleduje statistika použití pohonných látek zemedelskými stroji. Tahle statistika se pak odzrkadlí také v cenových nákladech, kde bude vyhodnocena pomocí kurzu jednoho litru pohonné látky na české koruny.
+
+\subsection{Výnos}
+Simulace vyhodnotí také predpokládaný výnos řepky v tunách. Ten se bude odvíjet podle prúmerného výnosu za hektár (Tuhle hodnotu získáme třeba tady \detokenize{https://www.vynosy-plodin.cz/2018-okresy-repka-ozima/}). Do tohohle výnosu zasáhnou postřiky a hnojiva, které tenhle výnos ovplyvní.
+
+\pagebreak
+\section{Implementace}
+Diskrétní simulaci řídí algoritmus "next event". Čekání na obslužnou linku je zařadí do FIFO fronty, proto bylo potřeba uvažovat dopředu, aby sme prvne poslali do fronty transakce s nejvyšší prioritou.
+Pro jednoduché ovplyvňovaní parametrú simulace byl implementován syntaktický analyzátor jednoduchého config súboru.
+
+\subsection{Petriho síte}
+Modelovali sme diskrétny systém pomocou hierarchickej petriho síte
 
 \begin{figure}[ht!]
 \centering
@@ -120,10 +138,33 @@ Při simulaci se sleduje statistika použití vody.
 \caption{Sklizeň}
 \end{figure}
 
+\pagebreak
 
-\section{Přínosy a nevýhody produkce řepky v ČR/SR}
-Produkce řepky je nepřímo dotována, proto bylo na území našeho státu tolik žlutých polí.
-Pěstování řepky ale nečí krajinu, velké množství postřiků hubí menší organismy a kontaminuje podzemní vodu.
+
+\subsection{Parametry simulace}
+Parametry simulace mǔžou být nastaveny ze souboru \emph{"settings.conf"}. O jeho čtení se stará jednoduchý syntaktický analyzátor. Výrazy zapsané do tohohle souboru musí mít tvar: $$PARAMETR = hodnota$$ Výrazy musí být oddeleny jedním nebo víc prázdných řádkú. Cokoliv zapsané po sekvenci znakú \ceskeuvozovky{$//$} je bráno jako komentář, který bude syntaktickým analyzátorem ignorován.
+\\ \\
+Seznam Parametrú:
+\begin{enumerate}
+    \item{\emph{WORKINGHOURSTIME} - představuje hodnotu v minutách počas které se bude v pracovný dny delat, výchozí hodnota je .}
+    \item{\emph{WORKINGDAYSCOUNT} - kolik pracovných dnú má jeden týden, výchozí hodnota je 5.}
+    \item{\emph{MORNINGTIME} - představuje čas v minutách která sa na začátku každého dne preskočí, než se začne pracovat. výchozí hodnota je .}
+    \item{\emph{TRACTORCOUNT} - kolik traktorú John Deere 6210R máme k dispozici. výchozí hodnota je .}
+    \item{\emph{SEEDINGMACHINECOUNT} - kolik secích strojú AMAZONE CAYENA máme k dispozici. výchozí hodnota je .}
+    \item{\emph{SPRAYERCOUNT} - kolik nesených postřekovačú AMAZONE UF máme k dispozici. výchozí hodnota je .}
+    \item{\emph{FERTILIZERSPREADERCOUNT} - kolik Rozmetadel minerálních hnojiv AMAZONE ZA-M Ultra Profis Hydro máme k dispozici. výchozí hodnota je .}
+    \item{\emph{HARVESTMACHINECOUNT} - kolik sklízecích mlátiček New Holland CR10.90 máme k dispozici. výchozí hodnota je .}
+    \item{\emph{FERTILELANDCOUNT} - představuje počet hektárov pôdy určených na rúst řepky. výchozí hodnota je .}
+    \item{\emph{SEEDINGDURATION} - představuje čas v minutách vyhrazeného na sázení řepky. výchozí hodnota je .}
+    \item{\emph{HARVESTDURATION} - představuje čas v minutách vyhrazeného na sklizeň. výchozí hodnota je .}
+\end{enumerate}
+
+\subsubsection{Zápis parametrú}
+Parametry není nutno psát ve tvaru "\emph{WORKINGHOURSTIME}" stejne dobře funguje zápis "\emph{Working Hours Time}", "\emph{working hours time}" nebo "\emph{workingHours Time}". Při zápisu parametru nezávisí na veľkosti písmen ani na mezerách. ak bude hodnota za rovná se neplatná, nebo nekterý z parametrú neuveden v konfiguračním souboru použije se jeho výchozí hodnota.
+
+\section{Příklad použití}
+
+
 
 
 \newpage
