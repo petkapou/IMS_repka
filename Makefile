@@ -54,3 +54,4 @@ documentation: $(DOC_FOLDER)/$(DOC_NAME).tex
 	#cd $(DOC_FOLDER) && dvips -t a4 $(DOC_NAME).dvi
 	#cd $(DOC_FOLDER) && ps2pdf $(DOC_NAME).ps
 	cd $(DOC_FOLDER) && pdflatex $(DOC_NAME).tex
+	cd $(DOC_FOLDER) && pdflatex $(DOC_NAME).tex

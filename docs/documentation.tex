@@ -34,7 +34,7 @@
 
 
 \section{Úvod}
-Našim cílem je simulovat rúst řepky, při kterém se zameříme na co nejefektivnejší využití zemedelských strojú na sázení, postřik, rozmetání hnojiv, sklizeň a přepravu do skladu. Neklademe si však za cíl přesne určit výnos řepky, spíše určit percentuální stráty, v dúsledku infestace škúdci, nebo naopak navýšení úrody v dúsledku poctivého hnojení. Simulace sleduje také použité zdroje jako náklady za pohonné látky, postřik a podobne. Pak už záleží jen na uživateli, či simulované navýšení úrody stojí za náklady spojené s jeho realizací.
+Našim cílem je simulovat růst řepky, při kterém se zameříme na co nejefektivnejší využití zemědělských strojů na sázení, postřik, rozmetání hnojiv, sklizeň a přepravu do skladu. Neklademe si však za cíl přesně určit výnos řepky, spíše určit percentuální ztráty, v důsledku infestace škůdci, nebo naopak navýšení úrody v důsledku poctivého hnojení. Simulace sleduje také použité zdroje jako náklady za pohonné látky, postřik a podobně. Pak už záleží jen na uživateli, či simulované navýšení úrody stojí za náklady spojené s jeho realizací.
 
 
 \include{postriky}
@@ -46,90 +46,90 @@ Našim cílem je simulovat rúst řepky, při kterém se zameříme na co nejefe
 
 \section{Sledované statistiky}
 \subsection{Úspešnost prací}
-Nejdúležitejší statistiky jsou práve staatistiky úspešnosti, protože definujú približné procento prací, které se vykonali ze všech naplánovaných. Kolik procent hektarú orné púdy sme stihli vysázet predtím než skončilo sázecí období. Nebo kolik procent hektarú řepky se stihlo postříkat/pohnojit před vypršením období na postřik/hnojení.
+Nejdůležitější statistiky jsou právě statistiky úspešnosti, protože definují přibližné procento prací, které se vykonaly ze všech naplánovaných. Kolik procent hektarú orné půdy jsme stihli vysázet předtím než skončilo sázecí období nebo kolik procent hektarů řepky se stihlo postříkat/pohnojit před vypršením období na postřik/hnojení.
 \subsubsection{Úspešnost sázení řepky}
-Tahle statistika závisí primárne od počtu hektarú orné púdy, času na sázení a počtu sázecích strojú. Ak bude z téhle statistiky vzcházet jenom bezproblémovém vysázení všech hektarú, indikuje to uživateli, že by mohl nakoupit víc orné púdy, skrátiť čas na sázení, nebo prodat nejaký sázecí stroj.
-\subsubsection{Úspešnost postřikú}
-Tahle statistika závisí od počtu hektarú řepky a postřikovačú. Tahle statistika se eviduje pro každý postřek jednotlive, i společne pro všechny. Statistiky jsou časove závislé, v dobe kdy bude probíhat více postřikú najednou budou výsledky horší. Postřikovače více vytížené. Další závislotí je, jestli se jedná o postřik selektivní nebo převentivní. Selektivní postřiky nemusí postřikovat celé pole, jenom nakažené časti pole. Ochranné postřiky budou aplikovány na celé pole. Uživatel múže z tehle statistik vyzistit období nejvetšího vytížení postřikovačú. Na tyhle období se podle toho adekvátne pripravit pronajmutím dalších strojú nebo navýšením pracovných hodin.
+Tato statistika závisí primárně na počtu hektarů orné půdy, času na sázení a počtu sázecích strojů. Když bude z této statistiky vycházet bezproblémové vysázení všech hektarů, indikuje to uživateli, že by mohl nakoupit víc orné půdy, zkrátit čas na sázení nebo prodat nějaký sázecí stroj.
+\subsubsection{Úspešnost postřiků}
+Tato statistika závisí na počtu hektarů řepky a postřikovačů. Tato statistika se eviduje pro každý postřik jednotlivě i společně pro všechny. Statistiky jsou časově závislé, v době kdy bude probíhat více postřiků najednou budou výsledky horší, protože budou postřikovače více vytížené. Další závislotí je, jestli se jedná o postřik selektivní nebo preventivní. Selektivní postřiky nemusí postřikovat celé pole, ale jenom nakažené časti pole. Ochranné postřiky budou aplikovány na celé pole. Uživatel může z těchto statistik zjistit období největšího vytížení postřikovačů a na tato období se podle toho adekvátně připravit pronajmutím dalších strojů nebo navýšením pracovních hodin.
 \subsubsection{Úspešnost hnojení}
-Tahle statistika závisí od počtu hektarú řepky a rozmetadel minerálních hnojiv. Tahle statistika se eviduje pro každé hnojivo jednotlive, i společne pro všechny. Časová závislost je stejná jako u postřikú. Znovu je statistika určená pro definování nejkritičtejších období, na které by se pak mohl uživatel(vlastník pole) připravit.
-\subsubsection{Úspešnost sklizne}
-Tahle statistika závisí od počtu hektarú řepky a sklízecích strojú. Pro jakéhokoliv zemedelce je určite jakákoliv jiná než stoprocentní sklizeň pole nepřípustná. Pro by si mel díky simulaci včas uvedomit, zda li mu daný počet strojú bude stačit.
+Tato statistika závisí na počtu hektarů řepky a rozmetadel minerálních hnojiv. Tato statistika se eviduje pro každé hnojivo jednotlivě i společně pro všechny. Časová závislost je stejná jako u postřiků. Znovu je statistika určena pro definování nejkritičtějších období, na které by se pak mohl uživatel(vlastník pole) připravit.
+\subsubsection{Úspešnost sklizně}
+Tato statistika závisí na počtu hektarů řepky a sklízecích strojů. Pro jakéhokoliv zemědělce je určitě jakákoliv jiná než stoprocentní sklizeň pole nepřípustná. Proto by si měl díky simulaci včas uvědomit, zdali mu daný počet strojů bude stačit.
 \subsection{Voda}
-Při simulaci se sleduje statistika použití vody. Jde o vodu použitou při postřecích. Její hodnota se nijak nepřevádí na cenové vyhodnocení, i když by sme mohli uvažovat cenu užitkové vody v českých korunách, není bežná praxe, aby si zemedelci vodu kupovali.
+Při simulaci se sleduje statistika použití vody. Jde o vodu použitou při postřicích. Její hodnota se nijak nepřevádí na cenové vyhodnocení, i když bychom mohli uvažovat cenu užitkové vody v českých korunách, není bežná praxe, aby si zemědělci vodu kupovali.
 
 \subsection{Pohonné látky}
-Při simulaci se sleduje statistika použití pohonných látek zemedelskými stroji. Tahle statistika se pak odzrkadlí také v cenových nákladech, kde bude vyhodnocena pomocí kurzu jednoho litru pohonné látky na české koruny.
+Při simulaci se sleduje statistika použití pohonných látek zemědělskými stroji. Tato statistika se pak odráží také v cenových nákladech, kde bude vyhodnocena pomocí kurzu jednoho litru pohonné látky na české koruny.
 
 \subsection{Výnos}
-Simulace vyhodnotí také predpokládaný výnos řepky v tunách. Ten se bude odvíjet podle prúmerného výnosu za hektár (Tuhle hodnotu získáme třeba tady \detokenize{https://www.vynosy-plodin.cz/2018-okresy-repka-ozima/}). Do tohohle výnosu zasáhnou postřiky a hnojiva, které tenhle výnos ovplyvní.
+Simulace vyhodnotí také předpokládaný výnos řepky v tunách. Ten se bude odvíjet od průměrného výnosu za hektár (Tuto hodnotu získáme třeba zde \detokenize{https://www.vynosy-plodin.cz/2018-okresy-repka-ozima/}). Do tohoto výnosu zasáhnou postřiky a hnojiva, které tento výnos ovlivní.
 
 \pagebreak
 \section{Implementace}
-Diskrétní simulaci řídí algoritmus "next event". Čekání na obslužnou linku je zařadí do FIFO fronty, proto bylo potřeba uvažovat dopředu, aby sme prvne poslali do fronty transakce s nejvyšší prioritou.
-Pro jednoduché ovplyvňovaní parametrú simulace byl implementován syntaktický analyzátor jednoduchého config súboru.
+Diskrétní simulaci řídí algoritmus "next event". Čekání na obslužnou linku je zařadí do FIFO fronty, proto bylo potřeba uvažovat dopředu, abychom prvně poslali do fronty transakce s nejvyšší prioritou.
+Pro jednoduché ovlivňování parametrů simulace byl implementován syntaktický analyzátor jednoduchého konfiguračního(config) souboru.
 
-\subsection{Petriho síte}
-Modelovali sme diskrétny systém pomocou hierarchickej petriho síte
+\subsection{Petriho sítě}
+Modelovali jsme diskrétní systém pomocí hierarchické petriho sítě.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/WeekGen.png}
-\caption{Transakcia "Working hours" počas pracovnej doby}
+\caption{Transakce "Working hours" v době pracovní doby}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/GenPictorTime.png}
-\caption{Transakcia "Time for Pictor" počas potreby postreku touto látkou}
+\caption{Transakce "Time for Pictor" v době potřeby postřiku touto látkou}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/GenEfilorTime.png}
-\caption{Transakcia "Time for Efilor" počas potreby postreku touto látkou}
+\caption{Transakce "Time for Efilor" v době potřeby postřiku touto látkou}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/GenCaryxTime.png}
-\caption{Transakcia "Time for Caryx" počas potreby postreku touto látkou}
+\caption{Transakce "Time for Caryx" v době potřeby postřiku touto látkou}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/GenButisanCompleteTime.png}
-\caption{Transakcia "Time for Butisan Complete" počas potreby postreku touto látkou}
+\caption{Transakce "Time for Butisan Complete" v době potřeby postřiku touto látkou}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/GenStratosUltraTime.png}
-\caption{Transakcia "Time for Stratos Ultra" počas potreby postreku touto látkou}
+\caption{Transakce "Time for Stratos Ultra" v době potřeby postřiku touto látkou}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/GenCleravisTime.png}
-\caption{Transakcia "Time for Cleravis" počas potreby postreku touto látkou}
+\caption{Transakce "Time for Cleravis" v době potřeby postřiku touto látkou}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/Infestation.png}
-\caption{Priebeh infestácie akoukoľvek chorobou/škodcom}
+\caption{Průběh infestace jakoukoli chorobou/skůdcem}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/Fertilization.png}
-\caption{Priebeh hnojenia akýmkoľvek hnojivom}
+\caption{Průběh hnojení jakýmkoli hnojivem}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.25]{img/Growing.png}
-\caption{Rast repky}
+\caption{Růst řepky}
 \end{figure}
 
 \begin{figure}[ht!]
@@ -142,25 +142,25 @@ Modelovali sme diskrétny systém pomocou hierarchickej petriho síte
 
 
 \subsection{Parametry simulace}
-Parametry simulace mǔžou být nastaveny ze souboru \emph{"settings.conf"}. O jeho čtení se stará jednoduchý syntaktický analyzátor. Výrazy zapsané do tohohle souboru musí mít tvar: $$PARAMETR = hodnota$$ Výrazy musí být oddeleny jedním nebo víc prázdných řádkú. Cokoliv zapsané po sekvenci znakú \ceskeuvozovky{$//$} je bráno jako komentář, který bude syntaktickým analyzátorem ignorován.
+Parametry simulace můžou být nastaveny v souboru \emph{"settings.conf"}. O jeho čtení se stará jednoduchý syntaktický analyzátor. Výrazy zapsané do tohoto souboru musí mít tvar: $$PARAMETR = hodnota$$ Výrazy musí být odděleny jedním nebo více prázdnými řádky. Cokoliv zapsané po sekvenci znakú \ceskeuvozovky{$//$} je bráno jako komentář, který bude syntaktickým analyzátorem ignorován.
 \\ \\
-Seznam Parametrú:
+Seznam Parametrů:
 \begin{enumerate}
-    \item{\emph{WORKINGHOURSTIME} - představuje hodnotu v minutách počas které se bude v pracovný dny delat, výchozí hodnota je .}
-    \item{\emph{WORKINGDAYSCOUNT} - kolik pracovných dnú má jeden týden, výchozí hodnota je 5.}
-    \item{\emph{MORNINGTIME} - představuje čas v minutách která sa na začátku každého dne preskočí, než se začne pracovat. výchozí hodnota je .}
-    \item{\emph{TRACTORCOUNT} - kolik traktorú John Deere 6210R máme k dispozici. výchozí hodnota je .}
-    \item{\emph{SEEDINGMACHINECOUNT} - kolik secích strojú AMAZONE CAYENA máme k dispozici. výchozí hodnota je .}
-    \item{\emph{SPRAYERCOUNT} - kolik nesených postřekovačú AMAZONE UF máme k dispozici. výchozí hodnota je .}
-    \item{\emph{FERTILIZERSPREADERCOUNT} - kolik Rozmetadel minerálních hnojiv AMAZONE ZA-M Ultra Profis Hydro máme k dispozici. výchozí hodnota je .}
-    \item{\emph{HARVESTMACHINECOUNT} - kolik sklízecích mlátiček New Holland CR10.90 máme k dispozici. výchozí hodnota je .}
-    \item{\emph{FERTILELANDCOUNT} - představuje počet hektárov pôdy určených na rúst řepky. výchozí hodnota je .}
-    \item{\emph{SEEDINGDURATION} - představuje čas v minutách vyhrazeného na sázení řepky. výchozí hodnota je .}
-    \item{\emph{HARVESTDURATION} - představuje čas v minutách vyhrazeného na sklizeň. výchozí hodnota je .}
+    \item{\emph{WORKINGHOURSTIME} - představuje hodnotu v minutách v době, kdy se bude v pracovní dny pracovat. Výchozí hodnota je .}
+    \item{\emph{WORKINGDAYSCOUNT} - kolik pracovních dní má jeden týden. Výchozí hodnota je 5.}
+    \item{\emph{MORNINGTIME} - představuje čas v minutách který se na začátku každého dne přeskočí, než se začne pracovat. Výchozí hodnota je .}
+    \item{\emph{TRACTORCOUNT} - kolik traktorů John Deere 6210R máme k dispozici. Výchozí hodnota je .}
+    \item{\emph{SEEDINGMACHINECOUNT} - kolik secích strojů AMAZONE CAYENA máme k dispozici. Výchozí hodnota je .}
+    \item{\emph{SPRAYERCOUNT} - kolik nesených postřikovačů AMAZONE UF máme k dispozici. Výchozí hodnota je .}
+    \item{\emph{FERTILIZERSPREADERCOUNT} - kolik rozmetadel minerálních hnojiv AMAZONE ZA-M Ultra Profis Hydro máme k dispozici. Výchozí hodnota je .}
+    \item{\emph{HARVESTMACHINECOUNT} - kolik sklízecích mlátiček New Holland CR10.90 máme k dispozici. Výchozí hodnota je .}
+    \item{\emph{FERTILELANDCOUNT} - představuje počet hektárů půdy určených na růst řepky. Výchozí hodnota je .}
+    \item{\emph{SEEDINGDURATION} - představuje čas v minutách vyhrazený na sázení řepky. Výchozí hodnota je .}
+    \item{\emph{HARVESTDURATION} - představuje čas v minutách vyhrazený na sklizeň. Výchozí hodnota je .}
 \end{enumerate}
 
 \subsubsection{Zápis parametrú}
-Parametry není nutno psát ve tvaru "\emph{WORKINGHOURSTIME}" stejne dobře funguje zápis "\emph{Working Hours Time}", "\emph{working hours time}" nebo "\emph{workingHours Time}". Při zápisu parametru nezávisí na veľkosti písmen ani na mezerách. ak bude hodnota za rovná se neplatná, nebo nekterý z parametrú neuveden v konfiguračním souboru použije se jeho výchozí hodnota.
+Parametry není nutno psát ve tvaru "\emph{WORKINGHOURSTIME}", stejně dobře funguje i zápis "\emph{Working Hours Time}", "\emph{working hours time}" nebo "\emph{workingHours Time}". Při zápisu parametru nezávisí na velikosti písmen ani na mezerách. Když bude hodnota za \ceskeuvozovky{$=$} neplatná, nebo když nebude některý z parametrů uveden v konfiguračním souboru, použije se jeho výchozí hodnota.
 
 \section{Příklad použití}
 
