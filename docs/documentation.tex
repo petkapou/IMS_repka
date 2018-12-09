@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[czech]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{listings}
 
 \usepackage{graphicx}
 
@@ -66,71 +67,68 @@ Simulace vyhodnotí také předpokládaný výnos řepky v tunách. Ten se bude 
 
 \pagebreak
 \section{Implementace}
-Diskrétní simulaci řídí algoritmus "next event". Čekání na obslužnou linku je zařadí do FIFO fronty, proto bylo potřeba uvažovat dopředu, abychom prvně poslali do fronty transakce s nejvyšší prioritou.
+Diskrétní simulaci řídí algoritmus "next event". Čas simulace je vždy jeden rok, protože léta se vzájemne neovplyvňují a tudíž by sme pořád získavali približne stejné informace z každého roku.
 Pro jednoduché ovlivňování parametrů simulace byl implementován syntaktický analyzátor jednoduchého konfiguračního(config) souboru.
 
 \subsection{Petriho sítě}
 Modelovali jsme diskrétní systém pomocí hierarchické petriho sítě.
 
+\subsubsection{Simulace pracovního týdne}
+Pracovný výkon je lehce ovlyvnitelný počtom pracovných dnú a délky pracovní doby predĺžením pracovnej doby z 8 hodin na dve smeny 16 hodin by nám zvýšilo výkon dvojnásobne.
+Místo \emph{Working Hours} predstavuje, jestli je momentálne pracovní doba.
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.3]{img/WeekGen.png}
 \caption{Transakce "Working hours" v době pracovní doby}
 \end{figure}
 
+\subsubsection{Simulace postřiku}
+Modelujeme dva typy postřiku, ochranný a selektivní. Ochranný postřek se aplikuje na každý hektár pudy v daném období. Selektivní jenom na vybrané hektary pudy napadnuté škúdci.
+
 \begin{figure}[ht!]
 \centering
-\includegraphics[scale=0.3]{img/GenPictorTime.png}
-\caption{Transakce "Time for Pictor" v době potřeby postřiku touto látkou}
+\includegraphics[scale=0.3]{img/SprayProt.png}
+\caption{Průběh ochranného postřikování}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[scale=0.3]{img/GenEfilorTime.png}
-\caption{Transakce "Time for Efilor" v době potřeby postřiku touto látkou}
+\includegraphics[scale=0.3]{img/SpraySel.png}
+\caption{Průběh selektivního postřikování}
+\end{figure}
+
+\pagebreak
+
+\subsubsection{Simulace hnojení}
+Modelujeme dva typy hnojení. Jeden využíva ako obslužnú linku rozmetadlo minerálnych hnojiv a druhý poštrikové stroje. Rozmetadlo je využívané hnojivem Eurofertil Top 49 NPS. Ostatní hnojiva (Fertiactyl Starter, Fertileader Gold a Fertileader Vital) jsou nanášeny postřikem.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.3]{img/FertilizationSpread.png}
+\caption{Průběh hnojení za pomoci rozmetadla minerálnich hnojiv}
 \end{figure}
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[scale=0.3]{img/GenCaryxTime.png}
-\caption{Transakce "Time for Caryx" v době potřeby postřiku touto látkou}
+\includegraphics[scale=0.3]{img/FertilizationSpray.png}
+\caption{Průběh hnojení za pomoci postřikového stroje}
 \end{figure}
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[scale=0.3]{img/GenButisanCompleteTime.png}
-\caption{Transakce "Time for Butisan Complete" v době potřeby postřiku touto látkou}
-\end{figure}
+\pagebreak
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[scale=0.3]{img/GenStratosUltraTime.png}
-\caption{Transakce "Time for Stratos Ultra" v době potřeby postřiku touto látkou}
-\end{figure}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[scale=0.3]{img/GenCleravisTime.png}
-\caption{Transakce "Time for Cleravis" v době potřeby postřiku touto látkou}
-\end{figure}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[scale=0.3]{img/Infestation.png}
-\caption{Průběh infestace jakoukoli chorobou/skůdcem}
-\end{figure}
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[scale=0.3]{img/Fertilization.png}
-\caption{Průběh hnojení jakýmkoli hnojivem}
-\end{figure}
+\subsubsection{Simulace rustu}
+Po úspešném zasetí každý hektar vygeneruje jednu transakci pro každý potřebný postřek či hnojení.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.25]{img/Growing.png}
 \caption{Růst řepky}
 \end{figure}
+
+\pagebreak
+
+\subsubsection{Simulace sklizne}
+Sklízecí mlátička sklidí pole a vrátí hektary spátky do místa \emph{Fertile Land}.
 
 \begin{figure}[ht!]
 \centering
@@ -146,25 +144,50 @@ Parametry simulace můžou být nastaveny v souboru \emph{"settings.conf"}. O je
 \\ \\
 Seznam Parametrů:
 \begin{enumerate}
-    \item{\emph{WORKINGHOURSTIME} - představuje hodnotu v minutách v době, kdy se bude v pracovní dny pracovat. Výchozí hodnota je .}
+    \item{\emph{AVERAGEPROFIT} - představuje prumerný výnos v tunách řepky. potencionální zdroj téhle informace v české republice: https://www.vynosy-plodin.cz/2018-okresy-repka-ozima/, Výchozí hodnota je 2.5.}
+    \item{\emph{WORKINGHOURSTIME} - představuje hodnotu v minutách v době, kdy se bude v pracovní dny pracovat. Výchozí hodnota je 480 (8 hodin).}
     \item{\emph{WORKINGDAYSCOUNT} - kolik pracovních dní má jeden týden. Výchozí hodnota je 5.}
-    \item{\emph{MORNINGTIME} - představuje čas v minutách který se na začátku každého dne přeskočí, než se začne pracovat. Výchozí hodnota je .}
-    \item{\emph{TRACTORCOUNT} - kolik traktorů John Deere 6210R máme k dispozici. Výchozí hodnota je .}
-    \item{\emph{SEEDINGMACHINECOUNT} - kolik secích strojů AMAZONE CAYENA máme k dispozici. Výchozí hodnota je .}
-    \item{\emph{SPRAYERCOUNT} - kolik nesených postřikovačů AMAZONE UF máme k dispozici. Výchozí hodnota je .}
-    \item{\emph{FERTILIZERSPREADERCOUNT} - kolik rozmetadel minerálních hnojiv AMAZONE ZA-M Ultra Profis Hydro máme k dispozici. Výchozí hodnota je .}
-    \item{\emph{HARVESTMACHINECOUNT} - kolik sklízecích mlátiček New Holland CR10.90 máme k dispozici. Výchozí hodnota je .}
-    \item{\emph{FERTILELANDCOUNT} - představuje počet hektárů půdy určených na růst řepky. Výchozí hodnota je .}
-    \item{\emph{SEEDINGDURATION} - představuje čas v minutách vyhrazený na sázení řepky. Výchozí hodnota je .}
-    \item{\emph{HARVESTDURATION} - představuje čas v minutách vyhrazený na sklizeň. Výchozí hodnota je .}
+    \item{\emph{MORNINGTIME} - představuje čas v minutách který se na začátku každého dne přeskočí, než se začne pracovat. Výchozí hodnota je 480 (8 hodin).}
+    \item{\emph{TRACTORCOUNT} - kolik traktorů John Deere 6210R máme k dispozici. Výchozí hodnota je 3.}
+    \item{\emph{SEEDINGMACHINECOUNT} - kolik secích strojů AMAZONE CAYENA máme k dispozici. Výchozí hodnota je 3.}
+    \item{\emph{SPRAYERCOUNT} - kolik nesených postřikovačů AMAZONE UF máme k dispozici. Výchozí hodnota je 3.}
+    \item{\emph{FERTILIZERSPREADERCOUNT} - kolik rozmetadel minerálních hnojiv AMAZONE ZA-M Ultra Profis Hydro máme k dispozici. Výchozí hodnota je 3.}
+    \item{\emph{HARVESTMACHINECOUNT} - kolik sklízecích mlátiček New Holland CR10.90 máme k dispozici. Výchozí hodnota je 3.}
+    \item{\emph{FERTILELANDCOUNT} - představuje počet hektárů půdy určených na růst řepky. Výchozí hodnota je 200.}
+    \item{\emph{SEEDINGDURATION} - představuje čas v minutách vyhrazený na sázení řepky. Výchozí hodnota je 7200 (5 dnu).}
+    \item{\emph{HARVESTDURATION} - představuje čas v minutách vyhrazený na sklizeň. Výchozí hodnota je 7200 (5 dnu).}
 \end{enumerate}
 
 \subsubsection{Zápis parametrú}
-Parametry není nutno psát ve tvaru "\emph{WORKINGHOURSTIME}", stejně dobře funguje i zápis "\emph{Working Hours Time}", "\emph{working hours time}" nebo "\emph{workingHours Time}". Při zápisu parametru nezávisí na velikosti písmen ani na mezerách. Když bude hodnota za \ceskeuvozovky{$=$} neplatná, nebo když nebude některý z parametrů uveden v konfiguračním souboru, použije se jeho výchozí hodnota.
+Parametry není nutno psát ve tvaru \ceskeuvozovky{\emph{WORKINGHOURSTIME}}, stejně dobře funguje i zápis \ceskeuvozovky{\emph{Working Hours Time}}, \ceskeuvozovky{\emph{working hours time}} nebo \ceskeuvozovky{\emph{workingHours Time}}. Při zápisu parametru nezávisí na velikosti písmen ani na mezerách. Když bude hodnota za \ceskeuvozovky{$=$} neplatná, nebo když nebude některý z parametrů uveden v konfiguračním souboru, použije se jeho výchozí hodnota.
 
 \section{Příklad použití}
 
+Predstavme si nasledující situaci: \\
+Vlastníme pole o rozlohe 500 hektárov, Máme 3 secí stroje, 3 traktory a 1 rozmetadlo minerálnych hnojiv. Zaujíma nás koľko postřikovacích stroju budeme potřebovat. \\ \\
 
+Proto jako první nastavíme dané parametry do konfiguračního souboru asi nejak takto: \\
+
+\begin{lstlisting}
+//Example 1
+
+Fertile Land Count = 500    //area in hectars
+
+Average Profit = 2.0
+
+Working Hours Time = 480 //duration of daily shift in minutes
+Working Days Count = 5
+Morning Time = 480 //duration in minutes which will be skiped every day before shift start
+
+Seeding Machine Count = 3
+Tractor Count = 3
+Sprayer Count = 1
+Fertilizer Spreader Count = 1
+Harvest Machine Count = 2
+
+SEEDINGDURATION = 7200 //duration of seeding in minutes
+HARVESTDURATION = 7200 //duration of harvest in minutes
+\end{lstlisting}
 
 
 \newpage
