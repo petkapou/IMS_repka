@@ -1,9 +1,10 @@
-////////////////////////////////////////////////////////////////////////////
-// Model Repka_kelemen_kapoun_2018                SIMLIB/C++
-//
-// Simple model of TODO
-//
-
+/*
+ *    IMS project 2018 repka
+ *
+ *  author: Erik Kelemen(xkelem01)
+ *  author: Petr Kapoun(xkoapou04)
+ *  
+ */
 
 #include "simlib.h"
 #include "parser.h"
@@ -17,18 +18,6 @@ ConfData config;
 Facility workingHours_F("Working Hours");
 Facility seedingTime_F("Seeding Time");
 Facility harvestTime_F("Harvest Time");
-/*Facility butisanCompleteTime_F("Time for Butisan Complete");
-Facility stratosUltraTime_F("Time for Stratos Ultra");
-Facility caryxTime_F("Time for Caryx");
-Facility pictorTime_F("Time for Pictor");
-Facility efilorTime_F("Time for Efilor");
-
-Facility eurofertilTopTime_F("Time for Eurofertil Top 49 NPS");
-Facility fertiactylStarter0Time_F("Time for Fertiactyl Starter");
-Facility fertiactylStarter1Time_F("Time for Fertiactyl Starter (second run)");
-Facility fertileaderGold0Time_F("Time for Fertileader Gold");
-Facility fertileaderGold1Time_F("Time for Fertileader Gold (second run)");
-Facility fertileaderVitalTime_F("Time for Fertileader Vital");*/
 
 Stat usedLandStat("Used land");
 Stat butisanCompleteStat("Applied spray Butisan Complete");
@@ -36,6 +25,7 @@ Stat stratosUltraStat("Applied spray Stratos Ultra");
 Stat caryxStat("Applied spray Caryx");
 Stat pictorStat("Applied spray Pictor");
 Stat efilorStat("Applied spray Efilor");
+Stat vaztakActiveStat("Applied spray Vaztak Active");
 Stat harvestedLandStat("Harvested land");
 Stat profitStat("Profit in tons");
 Stat eurofertilTopStat("Applied fertilizer Eurofertil Top 49 NPS");
@@ -84,6 +74,7 @@ int main() {
   caryxStat.Output();
   pictorStat.Output();
   efilorStat.Output();
+  vaztakActiveStat.Output();
   eurofertilTopStat.Output();
   fertiactylStarterStat.Output();
   fertileaderGoldStat.Output();

@@ -1,3 +1,11 @@
+/*
+ *		IMS project 2018 repka
+ *
+ *	author: Erik Kelemen(xkelem01)
+ *	author: Petr Kapoun(xkoapou04)
+ *	
+ */
+
 #ifndef H_PARSER
 #define H_PARSER 42
 
@@ -47,6 +55,9 @@
 
 #define PICTOR_TIME_START M_DAYS(57)	//Pictor
 #define PICTOR_DURATION M_DAYS(12)
+
+#define VAZTAK_ACTIVE_TIME_START M_DAYS(32)		//Vaztak Active
+#define VAZTAK_ACTIVE_DURATION M_DAYS(11)
 
 //FERTILIZERS
 

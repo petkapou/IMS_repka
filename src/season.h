@@ -1,3 +1,11 @@
+/*
+ *    IMS project 2018 repka
+ *
+ *  author: Erik Kelemen(xkelem01)
+ *  author: Petr Kapoun(xkoapou04)
+ *  
+ */
+
 #ifndef SEASON_H
 #define SEASON_H 42
 

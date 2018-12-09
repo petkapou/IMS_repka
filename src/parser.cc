@@ -1,3 +1,11 @@
+/*
+ *		IMS project 2018 repka
+ *
+ *	author: Erik Kelemen(xkelem01)
+ *	author: Petr Kapoun(xkoapou04)
+ *	
+ */
+
 #include "parser.h"
 
 ConfData::ConfData() : workingHoursTime_m(DEF_WORKINGHOURSTIME), workingDaysCount_m(DEF_WORKINGDAYSCOUNT), morningTime_m(DEF_MORNINGTIME), averageProfit_m(DEF_AVERAGEPROFIT),
@@ -14,7 +22,7 @@ ConfData::~ConfData(){
 }
 
 void ConfData::SetWorkingDaysCount(double workingDaysCount){
-	if (workingDaysCount <= WEEK_DAY_COUNT)
+	if ((workingDaysCount > 0) && (workingDaysCount <= WEEK_DAY_COUNT))			//must be less than 7 and more than zero
 		workingDaysCount_m = workingDaysCount;
 }
 

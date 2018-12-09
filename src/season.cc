@@ -1,3 +1,11 @@
+/*
+ *    IMS project 2018 repka
+ *
+ *  author: Erik Kelemen(xkelem01)
+ *  author: Petr Kapoun(xkoapou04)
+ *  
+ */
+
 #include "season.h"
 
 extern ConfData config;
@@ -5,19 +13,6 @@ extern Facility workingHours_F;
 
 extern Facility seedingTime_F;
 extern Facility harvestTime_F;
-
-extern Store seedingMachines_S;
-extern Store sprayers_S;
-extern Store harvestMachines_S;
-
-extern Stat usedLandStat;
-extern Stat butisanCompleteStat;
-extern Stat stratosUltraStat;
-extern Stat caryxStat;
-extern Stat pictorStat;
-extern Stat efilorStat;
-extern Stat harvestedLandStat;
-extern Stat profitStat;
 
 
 void SeasonCycle::Behavior() {
@@ -33,14 +28,14 @@ void WeekCycle::Behavior() {
     for (int i = 0; i < config.GetWorkingDaysCount(); ++i)
     {
       Wait(config.GetMorningTime());
-      workingHours_F.Release(this);
+      workingHours_F.Release(this);       //let them work from now on
       Wait(config.GetWorkingHoursTime());
-      workingHours_F.Seize(this, 1);
+      workingHours_F.Seize(this, 1);      //stop working
       double rest = M_DAYS(1) - config.GetMorningTime() - config.GetWorkingHoursTime();
       Wait(rest);
     }
     double restDays = WEEK_DAY_COUNT - config.GetWorkingDaysCount();
-    Wait(M_DAYS(restDays));
+    Wait(M_DAYS(restDays));     //Wait till end of the week
   }
 }
 
@@ -48,7 +43,7 @@ void SeedingCycle::Behavior() {
   seedingTime_F.Seize(this);
   while (42){
     Wait(config.GetSeedingTimeStart());
-    seedingTime_F.Release(this);
+    seedingTime_F.Release(this);      //let them seed from now on
     Wait(config.GetSeedingDuration());
     seedingTime_F.Seize(this);
     double restTime = M_YEARS(1) - config.GetSeedingTimeStart() - config.GetSeedingDuration();
@@ -60,7 +55,7 @@ void HarvestCycle::Behavior() {
   harvestTime_F.Seize(this);
   while (42){
     Wait(config.GetHarvestTimeStart());
-    harvestTime_F.Release(this);
+    harvestTime_F.Release(this);      //let them harvest from now on
     Wait(config.GetHarvestDuration());
     harvestTime_F.Seize(this);
     double restTime = M_YEARS(1) - config.GetHarvestTimeStart() - config.GetHarvestDuration();

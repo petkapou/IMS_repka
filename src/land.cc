@@ -1,3 +1,11 @@
+/*
+ *    IMS project 2018 repka
+ *
+ *  author: Erik Kelemen(xkelem01)
+ *  author: Petr Kapoun(xkoapou04)
+ *  
+ */
+
 #include "land.h"
 #include "season.h"
 
@@ -19,6 +27,7 @@ extern Stat stratosUltraStat;
 extern Stat caryxStat;
 extern Stat pictorStat;
 extern Stat efilorStat;
+extern Stat vaztakActiveStat;
 extern Stat harvestedLandStat;
 extern Stat profitStat;
 extern Stat eurofertilTopStat;
@@ -57,16 +66,20 @@ void FertileLand::Behavior(){
   (new Caryx(this))->Activate(Time + CARYX_TIME_START);
   (new Efilor(this))->Activate(Time + EFILOR_TIME_START);
   (new Pictor(this))->Activate(Time + PICTOR_TIME_START);
+  for (int i = 0; i < 3; ++i)
+  {
+    (new VaztakActive(this))->Activate(Time + VAZTAK_ACTIVE_TIME_START + (i * VAZTAK_ACTIVE_DURATION));   //Vaztak Active have three turns
+  }
 
   //Fertilizers
 
   (new EurofertilTop(this))->Activate(Time + EUROFERTIL_TOP_TIME_START);
-  for (int i = FERTIACTYL_STARTER_TIME_START; i < (DEF_HARVESTTIMESTART - M_DAYS(21)); i+= FERTIACTYL_STARTER_DURATION)
+  for (int i = FERTIACTYL_STARTER_TIME_START; i < (DEF_HARVESTTIMESTART - M_DAYS(21) - FERTIACTYL_STARTER_DURATION); i+= FERTIACTYL_STARTER_DURATION)   //Repeated until 3 weeks before harvest
   {
     (new FertiactylStarter(this))->Activate(Time + i);
   }
 
-  for (int i = FERTILEADER_GOLD_TIME_START; i < (DEF_HARVESTTIMESTART - M_DAYS(21)); i+= FERTILEADER_GOLD_DURATION)
+  for (int i = FERTILEADER_GOLD_TIME_START; i < (DEF_HARVESTTIMESTART - M_DAYS(21) - FERTILEADER_GOLD_DURATION); i+= FERTILEADER_GOLD_DURATION)   //Repeated until 3 weeks before harvest
   {
     (new FertileaderGold(this))->Activate(Time + i);
   }
@@ -94,24 +107,30 @@ void FertileLand::TimeoutFunc(){
   Cancel();
 }
 
-FinalStage::FinalStage(double profit) : profit_m(profit), harvestTimeout(NULL){
+FinalStage::FinalStage(double profit) : checkpointMachine(false), profit_m(profit), harvestTimeout(NULL){
 
 }
 
 void FinalStage::Behavior(){
   harvestTimeout = new Timeout(this, config.GetHarvestDuration());
   Enter(harvestMachines_S, 1);
-  delete harvestTimeout;
   workingHours_F.Seize(this);
   workingHours_F.Release(this);
+  delete harvestTimeout;
+  fuelStat(11.14);  //fuel consumption of New Holland CR10.90 machine
   Wait(Exponential(6));
   Leave(harvestMachines_S, 1);
   harvestedLandStat(1);
   profitStat(profit_m);
+  (new FertileLand)->Activate();
 }
 
 void FinalStage::TimeoutFunc(){
   harvestedLandStat(0);
+
+  if (checkpointMachine)
+    Leave(harvestMachines_S, 1);
+
   (new FertileLand)->Activate();
   Cancel();
 }
@@ -124,7 +143,7 @@ void TimeoutInterface::Behavior() {
 }
 
 void TimeoutInterface::TimeoutFunc() {
-  
+
 }
 
 Timeout::Timeout(TimeoutInterface*id, double timeout) : id_m(id) {
@@ -182,7 +201,7 @@ void StratosUltra::Behavior() {
   if (Random() <= 0.1)  //select only infested hectars
   {
     waterStat(Uniform(500, 600)); //consume 100-400 l of water
-    expensesStat(6990);           //cost with addition Dash HC
+    expensesStat(6990);           //cost with addition 1l Dash HC
     Wait(Uniform(M_MINUTES(5), M_MINUTES(10)));
   }
   Leave(sprayers_S, 1);
@@ -278,6 +297,38 @@ void Pictor::TimeoutFunc() {
     Leave(sprayers_S, 1);
 
   parent_m->MultProfit(Uniform(0.7, 1));    //up to 30 percent loss
+  Cancel();
+}
+
+VaztakActive::VaztakActive(FertileLand *id) : checkpoint(false), parent_m(id){
+
+}
+
+void VaztakActive::Behavior() {
+  sprayTimeout = new Timeout(this, VAZTAK_ACTIVE_DURATION);
+  Enter(sprayers_S, 1);
+  checkpoint = true;
+  workingHours_F.Seize(this);
+  workingHours_F.Release(this);
+  delete sprayTimeout;
+  if (Random() <= 0.1)  //select only infested hectars
+  {
+    waterStat(Uniform(200, 600));
+    expensesStat(244.5);
+    Wait(Uniform(M_MINUTES(5), M_MINUTES(10)));
+  }
+  Leave(sprayers_S, 1);
+  vaztakActiveStat(1);
+}
+
+void VaztakActive::TimeoutFunc() {
+  vaztakActiveStat(0);
+  if (checkpoint)
+    Leave(sprayers_S, 1);
+  
+  if (Random() <= 0.1)  //not every missed hectar is infected
+    parent_m->MultProfit(Uniform(0.5, 1));
+
   Cancel();
 }
 

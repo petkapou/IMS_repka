@@ -1,15 +1,16 @@
+/*
+ *		IMS project 2018 repka
+ *
+ *	author: Erik Kelemen(xkelem01)
+ *	author: Petr Kapoun(xkoapou04)
+ *	
+ */
+
 #ifndef LAND_H
 #define LAND_H 42
 
 #include "simlib.h"
 #include "parser.h"
-
-/*class WeedTimeoutInterface : public Event {
-	Process *Id;
-public:
-	WeedTimeoutInterface(Process *id, double dt);
-	void Behavior();
-};*/
 
 class TimeoutInterface : public Process {
 public:
@@ -45,6 +46,7 @@ public:
 	void Behavior();
 	void TimeoutFunc();
 private:
+	bool checkpointMachine;
 	double profit_m;
 	class Timeout * harvestTimeout;
 };
@@ -98,6 +100,17 @@ private:
 class Pictor : public TimeoutInterface {
 public:
 	Pictor(FertileLand *id);
+	void Behavior();
+	void TimeoutFunc();
+private:
+	bool checkpoint;
+	FertileLand * parent_m;
+	class Timeout * sprayTimeout;
+};
+
+class VaztakActive : public TimeoutInterface {
+public:
+	VaztakActive(FertileLand *id);
 	void Behavior();
 	void TimeoutFunc();
 private:
