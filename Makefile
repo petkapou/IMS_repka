@@ -8,7 +8,7 @@ TARGET = IMS
 
 CC=g++
 
-CFLAGS=-O2 -Wall -pedantic -lm
+CFLAGS=-O2 -Wall -pedantic -lm -lsimlib
 
 MODULES= season land parser
 
@@ -23,7 +23,7 @@ all: $(TARGET)
 .PHONY: clean, dokumentace
 
 $(TARGET) : $(OBJS) src/main.cc
-	$(CC) $(CFLAGS) $(OBJS) src/main.cc src/simlib.a -o $@
+	$(CC) $(CFLAGS) $(OBJS) src/main.cc -o $@
 
 obj/%.o : src/%.cc src/%.h
 	mkdir -p obj
@@ -53,5 +53,4 @@ documentation: $(DOC_FOLDER)/$(DOC_NAME).tex
 	#cd $(DOC_FOLDER) && latex $(DOC_NAME).tex
 	#cd $(DOC_FOLDER) && dvips -t a4 $(DOC_NAME).dvi
 	#cd $(DOC_FOLDER) && ps2pdf $(DOC_NAME).ps
-	cd $(DOC_FOLDER) && pdflatex $(DOC_NAME).tex
 	cd $(DOC_FOLDER) && pdflatex $(DOC_NAME).tex

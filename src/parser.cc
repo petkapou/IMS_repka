@@ -1,7 +1,8 @@
 #include "parser.h"
 
-ConfData::ConfData() : workingHoursTime_m(DEF_WORKINGHOURSTIME), workingDaysCount_m(DEF_WORKINGDAYSCOUNT), morningTime_m(DEF_MORNINGTIME),
-					seedingMachineCount_m(DEF_SEEDINGMACHINECOUNT), sprayerCount_m(DEF_SPRAYERCOUNT), harvestMachineCount_m(DEF_HARVESTMACHINECOUNT),
+ConfData::ConfData() : workingHoursTime_m(DEF_WORKINGHOURSTIME), workingDaysCount_m(DEF_WORKINGDAYSCOUNT), morningTime_m(DEF_MORNINGTIME), averageProfit_m(DEF_AVERAGEPROFIT),
+					tractorCount_m(DEF_TRACTORCOUNT), seedingMachineCount_m(DEF_SEEDINGMACHINECOUNT), sprayerCount_m(DEF_SPRAYERCOUNT), fertilizerSpreaderCount_m(DEF_FERTILIZERSPREADERCOUNT), 
+					harvestMachineCount_m(DEF_HARVESTMACHINECOUNT), 
 					fertileLandCount_m(DEF_FERTILELANDCOUNT),
 					seedingTimeStart_m(DEF_SEEDINGTIMESTART), seedingDuration_m(DEF_SEEDINGDURATION),
 					harvestTimeStart_m(DEF_HARVESTTIMESTART), harvestDuration_m(DEF_HARVESTDURATION){
@@ -34,11 +35,31 @@ void ConfData::SetMorningTime(double morningTime){
 	if ((morningTime + workingHoursTime_m) < M_DAYS(1))
 		morningTime_m = morningTime;
 	else
-		std::cerr << "Conf file: Morning Time out of range" << std::endl;
+		std::cerr << "Conf file: Morning Time out of range, default value used instead" << std::endl;
 }
 
 double ConfData::GetMorningTime(){
 	return morningTime_m;
+}
+
+void ConfData::SetAverageProfit(double averageProfit){
+	if ((averageProfit) > 0)
+		averageProfit_m = averageProfit;
+	else
+		std::cerr << "Conf file: Average Profit must be more than zero, default value used instead" << std::endl;
+}
+
+double ConfData::GetAverageProfit(){
+	return averageProfit_m;
+}
+
+void ConfData::SetTractorCount(double tractorCount){
+	if (tractorCount > 0)
+		tractorCount_m = tractorCount;
+}
+
+int ConfData::GetTractorCount(){
+	return tractorCount_m;
 }
 
 void ConfData::SetSeedingMachineCount(double seedingMachineCount){
@@ -57,6 +78,15 @@ void ConfData::SetSprayerCount(double sprayerCount){
 
 int ConfData::GetSprayerCount(){
 	return sprayerCount_m;
+}
+
+void ConfData::SetFertilizerSpreaderCount(double fertilizerSpreaderCount){
+	if (fertilizerSpreaderCount > 0)
+		fertilizerSpreaderCount_m = fertilizerSpreaderCount;
+}
+
+int ConfData::GetFertilizerSpreaderCount(){
+	return fertilizerSpreaderCount_m;
 }
 
 void ConfData::SetHarvestMachineCount(double harvestMachineCount){
@@ -113,8 +143,11 @@ Parser::Parser(std::string filePath, ConfData * confData) : confFile(std::ifstre
 	semantics["WORKINGHOURSTIME"] = std::bind(&ConfData::SetWorkingHoursTime, confData_m, std::placeholders::_1);
 	semantics["WORKINGDAYSCOUNT"] = std::bind(&ConfData::SetWorkingDaysCount, confData_m, std::placeholders::_1);
 	semantics["MORNINGTIME"] = std::bind(&ConfData::SetMorningTime, confData_m, std::placeholders::_1);
+	semantics["AVERAGEPROFIT"] = std::bind(&ConfData::SetAverageProfit, confData_m, std::placeholders::_1);
+	semantics["TRACTORCOUNT"] = std::bind(&ConfData::SetTractorCount, confData_m, std::placeholders::_1);
 	semantics["SEEDINGMACHINECOUNT"] = std::bind(&ConfData::SetSeedingMachineCount, confData_m, std::placeholders::_1);
 	semantics["SPRAYERCOUNT"] = std::bind(&ConfData::SetSprayerCount, confData_m, std::placeholders::_1);
+	semantics["FERTILIZERSPREADERCOUNT"] = std::bind(&ConfData::SetFertilizerSpreaderCount, confData_m, std::placeholders::_1);
 	semantics["HARVESTMACHINECOUNT"] = std::bind(&ConfData::SetHarvestMachineCount, confData_m, std::placeholders::_1);
 	semantics["FERTILELANDCOUNT"] = std::bind(&ConfData::SetFertileLandCount, confData_m, std::placeholders::_1);
 	semantics["SEEDINGDURATION"] = std::bind(&ConfData::SetSeedingDuration, confData_m, std::placeholders::_1);
@@ -145,8 +178,6 @@ Parser::Parser(std::string filePath, ConfData * confData) : confFile(std::ifstre
 				catch(std::invalid_argument e){
 					std::cerr << "invalid argument in conf file" << std::endl;
 				}
-
-				//std::cout << part0 << ':' << number << std::endl;
 			}
 		}
 	}

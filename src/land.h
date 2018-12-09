@@ -4,19 +4,6 @@
 #include "simlib.h"
 #include "parser.h"
 
-extern Store seedingMachines_S;
-extern Store sprayers_S;
-extern Store harvestMachines_S;
-
-extern Stat usedLandStat;
-extern Stat butisanCompleteStat;
-extern Stat stratosUltraStat;
-extern Stat caryxStat;
-extern Stat pictorStat;
-extern Stat efilorStat;
-extern Stat harvestedLandStat;
-extern Stat profitStat;
-
 /*class WeedTimeoutInterface : public Event {
 	Process *Id;
 public:
@@ -49,6 +36,7 @@ public:
 private:
 	double profit;
 	class Timeout * seedingTimeout;
+	bool checkpoint0, checkpoint1;
 };
 
 class FinalStage : public TimeoutInterface {
@@ -69,6 +57,7 @@ public:
 	void Behavior();
 	void TimeoutFunc();
 private:
+	bool checkpoint;
 	FertileLand * parent_m;
 	class Timeout * sprayTimeout;
 };
@@ -79,6 +68,7 @@ public:
 	void Behavior();
 	void TimeoutFunc();
 private:
+	bool checkpoint;
 	FertileLand * parent_m;
 	class Timeout * sprayTimeout;
 };
@@ -89,6 +79,7 @@ public:
 	void Behavior();
 	void TimeoutFunc();
 private:
+	bool checkpoint;
 	FertileLand * parent_m;
 	class Timeout * sprayTimeout;
 };
@@ -99,6 +90,7 @@ public:
 	void Behavior();
 	void TimeoutFunc();
 private:
+	bool checkpoint;
 	FertileLand * parent_m;
 	class Timeout * sprayTimeout;
 };
@@ -109,6 +101,51 @@ public:
 	void Behavior();
 	void TimeoutFunc();
 private:
+	bool checkpoint;
+	FertileLand * parent_m;
+	class Timeout * sprayTimeout;
+};
+
+class EurofertilTop : public TimeoutInterface {
+public:
+	EurofertilTop(FertileLand *id);
+	void Behavior();
+	void TimeoutFunc();
+private:
+	bool checkpointTractor, checkpointSpreader;
+	FertileLand * parent_m;
+	class Timeout * sprayTimeout;
+};
+
+class FertiactylStarter : public TimeoutInterface {
+public:
+	FertiactylStarter(FertileLand *id);
+	void Behavior();
+	void TimeoutFunc();
+private:
+	bool checkpointSprayer;
+	FertileLand * parent_m;
+	class Timeout * sprayTimeout;
+};
+
+class FertileaderGold : public TimeoutInterface {
+public:
+	FertileaderGold(FertileLand *id);
+	void Behavior();
+	void TimeoutFunc();
+private:
+	bool checkpointSprayer;
+	FertileLand * parent_m;
+	class Timeout * sprayTimeout;
+};
+
+class FertileaderVital : public TimeoutInterface {
+public:
+	FertileaderVital(FertileLand *id);
+	void Behavior();
+	void TimeoutFunc();
+private:
+	bool checkpointSprayer;
 	FertileLand * parent_m;
 	class Timeout * sprayTimeout;
 };
