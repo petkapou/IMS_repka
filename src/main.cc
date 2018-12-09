@@ -56,7 +56,7 @@ class Generator : public Event {
 
 int main() {
   //DebugON();
-  //SetOutput("model.out");      // Write results to file
+  SetOutput("model.out");      // Write results to file
   RandomSeed(time(NULL));
   Parser(CONFIG_FILE, &config);
   tractors_S.SetCapacity(config.GetTractorCount());
@@ -68,20 +68,29 @@ int main() {
   Init(0, M_YEARS(1));
   (new Generator)->Activate();
   Run();
-  usedLandStat.Output();
-  butisanCompleteStat.Output();
-  stratosUltraStat.Output();
-  caryxStat.Output();
-  pictorStat.Output();
-  efilorStat.Output();
-  vaztakActiveStat.Output();
-  eurofertilTopStat.Output();
-  fertiactylStarterStat.Output();
-  fertileaderGoldStat.Output();
-  fertileaderVitalStat.Output();
-  harvestedLandStat.Output();
-  waterStat.Output();
-  expensesStat.Output();
-  profitStat.Output();
+  Print("STATISTICS: \n");
+  Print("Seeded %.2f%, from %d hectars\n", usedLandStat.MeanValue()*100, config.GetFertileLandCount());
+
+  Print("\nSPRAYS: \n");
+
+  Print("Spray Butisan Complete success: %.2f%\n", butisanCompleteStat.MeanValue()*100);
+  Print("Spray Stratos Ultra success: %.2f%\n", stratosUltraStat.MeanValue()*100);
+  Print("Spray Caryx success: %.2f%\n", caryxStat.MeanValue()*100);
+  Print("Spray Pictor success: %.2f%\n", pictorStat.MeanValue()*100);
+  Print("Spray Vaztak Active success: %.2f%\n", vaztakActiveStat.MeanValue()*100);
+
+  Print("\nFERTILIZERS: \n");
+  Print("Fertilizer Eurofertil Top success: %.2f%\n", eurofertilTopStat.MeanValue()*100);
+  Print("Fertilizer Fertiactyl Starter success: %.2f%\n", fertiactylStarterStat.MeanValue()*100);
+  Print("Fertilizer Fertileader Gold success: %.2f%\n", fertileaderGoldStat.MeanValue()*100);
+  Print("Fertilizer Fertileader Vital success: %.2f%\n\n", fertileaderVitalStat.MeanValue()*100);
+
+  Print("Harvested %.2f%, %.0f hectars\n", harvestedLandStat.MeanValue()*100, harvestedLandStat.Sum());
+
+  Print("Water consumption: %.2f liters\n", waterStat.Sum());
+  Print("Fuel consumption: %.2f liters\n", fuelStat.Sum());
+  Print("Expenses for sprays and fertilizers: %.2f czech crowns\n", expensesStat.Sum());
+  Print("Profit: %.2f tons\n", profitStat.Sum());
+  
   SIMLIB_statistics.Output();   // Print simulator internal statistics
 }

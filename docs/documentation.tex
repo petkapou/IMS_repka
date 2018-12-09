@@ -188,7 +188,61 @@ Harvest Machine Count = 2
 SEEDINGDURATION = 7200 //duration of seeding in minutes
 HARVESTDURATION = 7200 //duration of harvest in minutes
 \end{lstlisting}
+\vspace{45px}
+Na výstupu nás zajímají hlavne tyhle radky: \\ \\
 
+\begin{lstlisting}
+Spray Butisan Complete success: 100.00%
+Spray Stratos Ultra success: 100.00%
+Spray Caryx success: 29.00%
+Spray Pictor success: 100.00%
+Spray Vaztak Active success: 33.33%
+
+Fertilizer Fertiactyl Starter success: 85.40%
+Fertilizer Fertileader Gold success: 49.60%
+Fertilizer Fertileader Vital success: 0.00%
+\end{lstlisting}
+\vspace{45px}
+Je videt, že s jedním postřikovacím strojem si nevystačíme.\\
+Ak by sme chteli každý postrik s úspešností nad 80 procent, potřebujeme aspoň tři. \\
+Výpis s použitím tří postřikovacích strojú: \\ \\
+\begin{lstlisting}
+SPRAYS: 
+Spray Butisan Complete success: 100.00%
+Spray Stratos Ultra success: 100.00%
+Spray Caryx success: 100.00%
+Spray Pictor success: 100.00%
+Spray Vaztak Active success: 100.00%
+
+FERTILIZERS: 
+Fertilizer Eurofertil Top success: 84.60%
+Fertilizer Fertiactyl Starter success: 100.00%
+Fertilizer Fertileader Gold success: 100.00%
+Fertilizer Fertileader Vital success: 100.00%
+\end{lstlisting}
+\vspace{45px}
+Avšak to není jediné rešení, mohli bychom nechat postřikovací stroje dva a prodloužit pracovní dobu z osum hodin na dvanást.\\
+Patrične upravíme náš konfigurační soubor: \\ \\
+\begin{lstlisting}
+Working Hours Time = 720 //duration of daily shift in minutes
+Sprayer Count = 2
+\end{lstlisting}
+\vspace{45px}
+A tady už taky vidíme každý postřik s více než 80 procentní úspešností. \\ \\
+\begin{lstlisting}
+SPRAYS: 
+Spray Butisan Complete success: 100.00%
+Spray Stratos Ultra success: 100.00%
+Spray Caryx success: 95.00%
+Spray Pictor success: 100.00%
+Spray Vaztak Active success: 100.00%
+
+FERTILIZERS: 
+Fertilizer Eurofertil Top success: 100.00%
+Fertilizer Fertiactyl Starter success: 100.00%
+Fertilizer Fertileader Gold success: 100.00%
+Fertilizer Fertileader Vital success: 100.00%
+\end{lstlisting}
 
 \newpage
 \bibliography{literatura}
